@@ -1,0 +1,40 @@
+#schedule_form.modal.fade
+	.modal-dialog
+		form.modal-content
+			.modal-header
+				h4.modal-title.title_create Создание
+				h4.modal-title.title_edit Редактирование
+			.modal-body
+				.form-horizontal
+					.form-group
+						label.col-sm-2.control-label(for='input-name') Имя
+						.col-sm-10
+							input#input-name.form-control(type='text', placeholder='Имя')
+					.form-group
+						label.col-sm-2.control-label(for='input-email') Email
+						.col-sm-10
+							input#input-email.form-control(type='email', placeholder='Email')
+					.form-group
+						.col-sm-offset-2.col-sm-10
+							.checkbox
+								label
+									input#input-laterout(type='checkbox')
+									|  Поздний выезд
+					.form-group
+						.col-sm-offset-2.col-sm-10
+							.checkbox
+								label
+									input#input-laterin(type='checkbox')
+									|  Поздний заезд
+					.form-group
+						label.col-sm-2.control-label(for='input-status') Статус
+						.col-sm-10
+							select#input-status.form-control
+								option(value='green') Подтверждено
+								option(value='blue') Бронируется
+								option(value='yellow') Забронирован
+								option(value='red') Не работает
+			.modal-footer
+				button.btn.btn-danger.action_remove(data-dismiss='modal') Удалить
+				button.btn.btn-default.action_cancel(type='reset', data-dismiss='modal') Отмена
+				button.btn.btn-primary(type='submit') Сохранить

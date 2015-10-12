@@ -1,0 +1,75 @@
+doctype
+html(lang='ru')
+	head
+		title More
+		include html/meta
+		include html/css
+	body
+		include block/header
+		.container-fluid
+			.row
+				.col-md-3
+					table#variants.variants.table.table-bordered.table-striped
+						thead
+							tr
+								th Зд.
+								th Эт.
+								th №
+								th Класс
+								th Тип
+								th Мест
+						tbody
+							tr
+								td Основное
+								td 1
+								td 1
+								td 1
+								td 1
+								td 0-1
+							tr
+								td Основное
+								td 1
+								td 1
+								td 1
+								td 1
+								td 0-1
+							tr
+								td Основное
+								td 1
+								td 1
+								td 1
+								td 1
+								td 0-1
+				.col-md-9
+					div.limiter
+						table#schedule.table.table-bordered.table-striped
+							thead
+								tr 
+								tr.dayList
+							tbody
+			.row
+				.col-md-3
+					ul.tooltipList
+						li
+							.label.label-td-green 
+							| Подтверждено
+						li
+							.label.label-td-blue 
+							| Заблокирован(бронируется)
+						li
+							.label.label-td-yellow 
+							| Забронирован
+						li
+							.label.label-td-red 
+							| Не работает
+				.col-md-4
+					ul.tooltipList
+						li.icon-employee Бронируется сотрудником
+						li.icon-site Бронируется через сайт
+						li.icon-agent Бронируется агенством
+
+
+		//- Body of site
+		include block/popups
+		include block/footer
+		include html/js

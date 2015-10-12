@@ -1,0 +1,156 @@
+a {
+  cursor: pointer;
+  outline: none;
+}
+ul {
+  list-style: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+table.variants {
+  border: 0;
+}
+table.variants thead th {
+  height: 59px;
+  color: #fff;
+  font-weight: normal;
+  border: 0 !important;
+  vertical-align: middle;
+}
+table.variants thead tr {
+  background: #a1b5be;
+}
+table.variants tbody tr {
+  background-color: #f5f7f8;
+  color: #333;
+}
+table.variants tbody tr:nth-child(even) {
+  background-color: #eff5f6;
+}
+table.variants td {
+  border: 0 !important;
+  border-bottom: 1px solid #deebed !important;
+}
+#schedule {
+  width: auto;
+  position: relative;
+  left: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+#schedule th {
+  border: 0;
+  text-align: center;
+  background: #5e7d8c;
+  color: #fff;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+#schedule th .dayOfWeek {
+  text-transform: none;
+  font-size: 11px;
+  color: #849ca7;
+}
+#schedule th .dayInMonth {
+  font-size: 11px;
+}
+#schedule .dayList {
+  height: 21px;
+}
+#schedule .dayList th {
+  background: #476777;
+  padding: 0;
+}
+#schedule td {
+  min-width: 60px;
+  position: relative;
+  padding: 0;
+  height: 37px;
+  border: 0;
+  border-bottom: 1px solid #deebed;
+}
+#schedule td:after {
+  content: ' ';
+  position: absolute;
+  right: 0;
+  width: 1px;
+  top: 10px;
+  bottom: 10px;
+  background-color: #a7bcc6;
+}
+#schedule .label-td {
+  position: absolute;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: move;
+  min-width: 100%;
+  margin: 8px 0;
+  line-height: 14px;
+}
+.label-td {
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  -webkit-box-shadow: inset 1px 1px 7px -2px #333;
+  box-shadow: inset 1px 1px 7px -2px #333;
+}
+.label-td-green {
+  background: #6eba44;
+}
+.label-td-blue {
+  background: #00bede;
+}
+.label-td-yellow {
+  background: #ffc30b;
+}
+.label-td-red {
+  background: #f05c1b;
+}
+.limiter {
+  overflow: hidden;
+  width: 100%;
+}
+.edit .title_create {
+  display: none;
+}
+.create .title_edit {
+  display: none;
+}
+.create .action_remove {
+  display: none;
+}
+.tooltipList li {
+  margin-bottom: 20px;
+}
+.tooltipList .label {
+  width: 50px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.tooltipList .icon-employee {
+  background: url("../img/by_employee.png") left center no-repeat;
+  padding-left: 20px;
+}
+.tooltipList .icon-site {
+  background: url("../img/by_site.png") left center no-repeat;
+  padding-left: 20px;
+}
+.tooltipList .icon-agent {
+  background: url("../img/by_agent.png") left center no-repeat;
+  padding-left: 20px;
+}
