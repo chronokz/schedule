@@ -103,20 +103,7 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 
 $('#schedule tbody').on 'mousemove', 'td', (e) ->
 	if mouseIsDown
-		if !labelDrag
-			mouseElCurrent = $(this)
-			tr_level = $(this).closest('tr').index()
-
-			if !check_collision(tr_level, $(this).index())
-				width = (mouseElCurrent.index()-mouseElStart.index()+1)*100
-				# range = $(this).width()/2-e.offsetX
-				# if range > 0
-				# 	width-=50
-				# else
-				# 	width+=0
-				currentLabel.css('width', width+'%')
-			
-		else
+		if labelDrag
 			tr_level = $(this).closest('tr').index()
 			td_level = labelTdLevel
 
@@ -130,6 +117,19 @@ $('#schedule tbody').on 'mousemove', 'td', (e) ->
 
 			if !isCollision
 				currentLabel.appendTo($('#schedule tbody tr:eq('+tr_level+') td:eq('+td_level+')'))
+			
+		else
+			mouseElCurrent = $(this)
+			tr_level = $(this).closest('tr').index()
+
+			if !check_collision(tr_level, $(this).index())
+				width = (mouseElCurrent.index()-mouseElStart.index()+1)*100
+				# range = $(this).width()/2-e.offsetX
+				# if range > 0
+				# 	width-=50
+				# else
+				# 	width+=0
+				currentLabel.css('width', width+'%')
 
 
 # Label
@@ -189,9 +189,11 @@ $('#schedule_form form .action_cancel').click ->
 	$('#schedule_form').modal 'hide'
 	if $('#schedule_form').hasClass 'create'
 		currentLabel.remove()
+		busytd[currentLabel.data('index')] = []
 	$('#schedule_form').removeClass('create').removeClass('edit')
 
 $('#schedule_form form .action_remove').click ->
 	$('#schedule_form').modal 'hide'
 	$('#schedule_form').removeClass('create').removeClass('edit')
 	currentLabel.remove()
+	busytd[currentLabel.data('index')] = []
