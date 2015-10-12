@@ -54,30 +54,22 @@ check_collision = function(currentLabelTr, currentLabelTd) {
  */
 
 $('#schedule tbody').on('mousedown', 'td', function(e) {
-  var range;
   if (e.which === 1) {
     mouseIsDown = true;
     mouseElStart = $(this);
     currentLabel = $('<div class="label label-primary label-td">&nbsp;</div>');
     labelTrLevel = $(this).closest('tr').index();
-    $(this).append(currentLabel);
-    range = $(this).width() / 2 - e.offsetX;
-    if (range > 0) {
-      return currentLabel.css('left', '25%');
-    } else {
-      return currentLabel.css('left', '75%');
-    }
+    return $(this).append(currentLabel);
   }
 });
 
 $('#schedule tbody').on('mouseup', 'td', function(e) {
-  var i, range, td_level, tr_level, width;
+  var i, td_level, tr_level, width;
   if (e.which === 1) {
     mouseIsDown = false;
     if (labelDrag) {
       tr_level = $(this).closest('tr').index();
       td_level = labelTdLevel;
-      console.info(tr_level, td_level);
       currentLabel.appendTo($('#schedule tbody tr:eq(' + tr_level + ') td:eq(' + td_level + ')'));
 
       /*			len = Math.floor(parseInt(currentLabel[0].style.width)/100)
@@ -90,27 +82,21 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
       
       			if !isCollision
       				currentLabel.appendTo($('#schedule tbody tr:eq('+tr_level+') td:eq('+td_level+')'))
-      
-      			busytd[currentLabel.data('index')] = []
-      			i = mouseElStart.index()
-      			while i < mouseElFinish.index()
-      				busytd[currentLabel.data('index')].push([tr_level, i])
-      				i++
        */
+      busytd[currentLabel.data('index')] = [];
+      i = mouseElStart.index();
+      while (i < mouseElFinish.index()) {
+        busytd[currentLabel.data('index')].push([tr_level, i]);
+        i++;
+      }
       return labelDrag = false;
     } else {
       mouseElFinish = $(this);
       if (mouseElFinish && mouseElStart) {
         tr_level = labelTrLevel;
-        width = (mouseElFinish.index() - mouseElStart.index()) * 100;
+        width = (mouseElFinish.index() - mouseElStart.index() + 1) * 100;
         currentLabel.css('width', width + '%');
         currentLabel.css('z-index', 100);
-        range = $(this).width() / 2 - e.offsetX;
-        if (range > 0) {
-          width -= 50;
-        } else {
-          width += 0;
-        }
         currentLabel.css('width', width + '%');
         $('#schedule_form').modal('show');
         $('#schedule_form').addClass('create');
@@ -129,23 +115,17 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
 });
 
 $('#schedule tbody').on('mousemove', 'td', function(e) {
-  var i, isCollision, len, range, td_level, tr_level, width;
+  var i, isCollision, len, td_level, tr_level, width;
   if (mouseIsDown) {
     if (!labelDrag) {
       mouseElCurrent = $(this);
       tr_level = $(this).closest('tr').index();
       if (!check_collision(tr_level, $(this).index())) {
-        width = (mouseElCurrent.index() - mouseElStart.index()) * 100;
-        range = $(this).width() / 2 - e.offsetX;
-        if (range > 0) {
-          width -= 50;
-        } else {
-          width += 0;
-        }
+        width = (mouseElCurrent.index() - mouseElStart.index() + 1) * 100;
         return currentLabel.css('width', width + '%');
       }
     } else {
-      tr_level = labelTrLevel;
+      tr_level = $(this).closest('tr').index();
       td_level = labelTdLevel;
       len = Math.floor(parseInt(currentLabel[0].style.width) / 100);
       i = 0;

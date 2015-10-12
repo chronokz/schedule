@@ -41,11 +41,11 @@ $('#schedule tbody').on 'mousedown', 'td', (e) ->
 		currentLabel = $('<div class="label label-primary label-td">&nbsp;</div>')
 		labelTrLevel = $(this).closest('tr').index()
 		$(this).append(currentLabel)
-		range = $(this).width()/2-e.offsetX
-		if range > 0
-			currentLabel.css('left', '25%')
-		else
-			currentLabel.css('left', '75%')
+		# range = $(this).width()/2-e.offsetX
+		# if range > 0
+		# 	currentLabel.css('left', '25%')
+		# else
+		# 	currentLabel.css('left', '75%')
 		
 
 $('#schedule tbody').on 'mouseup', 'td', (e) ->
@@ -54,7 +54,6 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 		if labelDrag
 			tr_level = $(this).closest('tr').index()
 			td_level = labelTdLevel
-			console.info tr_level, td_level
 			currentLabel.appendTo($('#schedule tbody tr:eq('+tr_level+') td:eq('+td_level+')'))
 			###			len = Math.floor(parseInt(currentLabel[0].style.width)/100)
 			i = 0
@@ -67,25 +66,25 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 			if !isCollision
 				currentLabel.appendTo($('#schedule tbody tr:eq('+tr_level+') td:eq('+td_level+')'))
 
+			###
 			busytd[currentLabel.data('index')] = []
 			i = mouseElStart.index()
 			while i < mouseElFinish.index()
 				busytd[currentLabel.data('index')].push([tr_level, i])
 				i++
-			###
 			labelDrag = false
 		else
 			mouseElFinish = $(this)
 			if mouseElFinish && mouseElStart
 				tr_level = labelTrLevel
-				width = (mouseElFinish.index()-mouseElStart.index())*100
+				width = (mouseElFinish.index()-mouseElStart.index()+1)*100
 				currentLabel.css('width', width+'%')
 				currentLabel.css('z-index', 100)
-				range = $(this).width()/2-e.offsetX
-				if range > 0
-					width-=50
-				else
-					width+=0
+				# range = $(this).width()/2-e.offsetX
+				# if range > 0
+				# 	width-=50
+				# else
+				# 	width+=0
 				currentLabel.css('width', width+'%')
 				$('#schedule_form').modal 'show'
 				$('#schedule_form').addClass 'create'
@@ -109,17 +108,18 @@ $('#schedule tbody').on 'mousemove', 'td', (e) ->
 			tr_level = $(this).closest('tr').index()
 
 			if !check_collision(tr_level, $(this).index())
-				width = (mouseElCurrent.index()-mouseElStart.index())*100
-				range = $(this).width()/2-e.offsetX
-				if range > 0
-					width-=50
-				else
-					width+=0
+				width = (mouseElCurrent.index()-mouseElStart.index()+1)*100
+				# range = $(this).width()/2-e.offsetX
+				# if range > 0
+				# 	width-=50
+				# else
+				# 	width+=0
 				currentLabel.css('width', width+'%')
 			
 		else
-			tr_level = labelTrLevel
+			tr_level = $(this).closest('tr').index()
 			td_level = labelTdLevel
+
 			len = Math.floor(parseInt(currentLabel[0].style.width)/100)
 			i = 0
 			isCollision = false
