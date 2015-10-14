@@ -41,11 +41,12 @@ $('#schedule tbody').on 'mousedown', 'td', (e) ->
 		currentLabel = $('<div class="label label-primary label-td">&nbsp;</div>')
 		labelTrLevel = $(this).closest('tr').index()
 		$(this).append(currentLabel)
-		# range = $(this).width()/2-e.offsetX
-		# if range > 0
-		# 	currentLabel.css('left', '25%')
-		# else
-		# 	currentLabel.css('left', '75%')
+
+		range = $(this).width()/2-e.offsetX
+		if range > 0
+			currentLabel.css('left', '25%')
+		else
+			currentLabel.css('left', '75%')
 		
 
 $('#schedule tbody').on 'mouseup', 'td', (e) ->
@@ -80,12 +81,14 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 				width = (mouseElFinish.index()-mouseElStart.index())*100
 				currentLabel.css('width', width+'%')
 				currentLabel.css('z-index', 100)
-				# range = $(this).width()/2-e.offsetX
-				# if range > 0
-				# 	width-=50
-				# else
-				# 	width+=0
+
+				range = $(this).width()/2-e.offsetX
+				if range > 0
+					width-=0
+				else
+					width+=50
 				currentLabel.css('width', width+'%')
+
 				$('#schedule_form').modal 'show'
 				$('#schedule_form').addClass 'create'
 				$('#schedule_form input').val('')
@@ -121,9 +124,6 @@ $('#schedule tbody').on 'mousemove', 'td', (e) ->
 		else
 			mouseElCurrent = $(this)
 			tr_level = $(this).closest('tr').index()
-
-			len = Math.floor(parseInt(currentLabel[0].style.width)/100)
-
 		
 			i = currentLabel.parent().index()
 			isCollision = false
@@ -133,12 +133,13 @@ $('#schedule tbody').on 'mousemove', 'td', (e) ->
 					isCollision = true
 
 			if !isCollision
-				width = (mouseElCurrent.index()-mouseElStart.index()+1)*100
+				width = (mouseElCurrent.index()-mouseElStart.index())*100
+
 				range = $(this).width()/2-e.offsetX
 				if range > 0
-					width-=50
+					width-=0
 				else
-					width+=0
+					width+=50
 				currentLabel.css('width', width+'%')
 			
 

@@ -54,17 +54,24 @@ check_collision = function(currentLabelTr, currentLabelTd) {
  */
 
 $('#schedule tbody').on('mousedown', 'td', function(e) {
+  var range;
   if (e.which === 1) {
     mouseIsDown = true;
     mouseElStart = $(this);
     currentLabel = $('<div class="label label-primary label-td">&nbsp;</div>');
     labelTrLevel = $(this).closest('tr').index();
-    return $(this).append(currentLabel);
+    $(this).append(currentLabel);
+    range = $(this).width() / 2 - e.offsetX;
+    if (range > 0) {
+      return currentLabel.css('left', '25%');
+    } else {
+      return currentLabel.css('left', '75%');
+    }
   }
 });
 
 $('#schedule tbody').on('mouseup', 'td', function(e) {
-  var i, td_level, tr_level, width;
+  var i, range, td_level, tr_level, width;
   if (e.which === 1) {
     mouseIsDown = false;
     if (labelDrag) {
@@ -97,6 +104,12 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
         width = (mouseElFinish.index() - mouseElStart.index()) * 100;
         currentLabel.css('width', width + '%');
         currentLabel.css('z-index', 100);
+        range = $(this).width() / 2 - e.offsetX;
+        if (range > 0) {
+          width -= 0;
+        } else {
+          width += 50;
+        }
         currentLabel.css('width', width + '%');
         $('#schedule_form').modal('show');
         $('#schedule_form').addClass('create');
@@ -135,7 +148,6 @@ $('#schedule tbody').on('mousemove', 'td', function(e) {
     } else {
       mouseElCurrent = $(this);
       tr_level = $(this).closest('tr').index();
-      len = Math.floor(parseInt(currentLabel[0].style.width) / 100);
       i = currentLabel.parent().index();
       isCollision = false;
       while (i < $(this).index()) {
@@ -145,12 +157,12 @@ $('#schedule tbody').on('mousemove', 'td', function(e) {
         }
       }
       if (!isCollision) {
-        width = (mouseElCurrent.index() - mouseElStart.index() + 1) * 100;
+        width = (mouseElCurrent.index() - mouseElStart.index()) * 100;
         range = $(this).width() / 2 - e.offsetX;
         if (range > 0) {
-          width -= 50;
+          width -= 0;
         } else {
-          width += 0;
+          width += 50;
         }
         return currentLabel.css('width', width + '%');
       }
