@@ -94,7 +94,7 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
       mouseElFinish = $(this);
       if (mouseElFinish && mouseElStart) {
         tr_level = labelTrLevel;
-        width = (mouseElFinish.index() - mouseElStart.index() + 1) * 100;
+        width = (mouseElFinish.index() - mouseElStart.index()) * 100;
         currentLabel.css('width', width + '%');
         currentLabel.css('z-index', 100);
         currentLabel.css('width', width + '%');
@@ -115,16 +115,9 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
 });
 
 $('#schedule tbody').on('mousemove', 'td', function(e) {
-  var i, isCollision, len, td_level, tr_level, width;
+  var i, isCollision, len, range, td_level, tr_level, width;
   if (mouseIsDown) {
-    if (!labelDrag) {
-      mouseElCurrent = $(this);
-      tr_level = $(this).closest('tr').index();
-      if (!check_collision(tr_level, $(this).index())) {
-        width = (mouseElCurrent.index() - mouseElStart.index() + 1) * 100;
-        return currentLabel.css('width', width + '%');
-      }
-    } else {
+    if (labelDrag) {
       tr_level = $(this).closest('tr').index();
       td_level = labelTdLevel;
       len = Math.floor(parseInt(currentLabel[0].style.width) / 100);
@@ -138,6 +131,28 @@ $('#schedule tbody').on('mousemove', 'td', function(e) {
       }
       if (!isCollision) {
         return currentLabel.appendTo($('#schedule tbody tr:eq(' + tr_level + ') td:eq(' + td_level + ')'));
+      }
+    } else {
+      mouseElCurrent = $(this);
+      tr_level = $(this).closest('tr').index();
+      len = Math.floor(parseInt(currentLabel[0].style.width) / 100);
+      i = currentLabel.parent().index();
+      isCollision = false;
+      while (i < $(this).index()) {
+        i++;
+        if (check_collision(tr_level, $(this).index())) {
+          isCollision = true;
+        }
+      }
+      if (!isCollision) {
+        width = (mouseElCurrent.index() - mouseElStart.index() + 1) * 100;
+        range = $(this).width() / 2 - e.offsetX;
+        if (range > 0) {
+          width -= 50;
+        } else {
+          width += 0;
+        }
+        return currentLabel.css('width', width + '%');
       }
     }
   }
@@ -205,6 +220,7 @@ $('#schedule_form form .action_cancel').click(function() {
   $('#schedule_form').modal('hide');
   if ($('#schedule_form').hasClass('create')) {
     currentLabel.remove();
+    busytd[currentLabel.data('index')] = [];
   }
   return $('#schedule_form').removeClass('create').removeClass('edit');
 });
@@ -212,7 +228,8 @@ $('#schedule_form form .action_cancel').click(function() {
 $('#schedule_form form .action_remove').click(function() {
   $('#schedule_form').modal('hide');
   $('#schedule_form').removeClass('create').removeClass('edit');
-  return currentLabel.remove();
+  currentLabel.remove();
+  return busytd[currentLabel.data('index')] = [];
 });
 
 var d, date, dayInMonth, dayOfWeek, m, month, td, v, variants, weeks, y, yd;
