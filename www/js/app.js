@@ -208,13 +208,17 @@ $('#schedule thead').on('mouseup', 'th', function(e) {
   return monthMouse = 0;
 });
 
+$('#schedule thead').on('mouseout', 'th', function(e) {
+  return monthMouse = 0;
+});
+
 $('#schedule_form form').submit(function() {
   var newLeft, newWidth;
   $('#schedule_form').modal('hide');
   currentLabel.text($(this).find('#input-name').val());
   currentLabel.attr('class', 'label label-primary label-td');
   currentLabel.addClass('label-td-' + $(this).find('#input-status').val());
-  if ($('#input-laterin').prop('checked')) {
+  if ($('#input-earlyin').prop('checked')) {
     newLeft = parseInt(currentLabel[0].style.left) + 25;
     newWidth = parseInt(currentLabel[0].style.width) - 25;
     currentLabel.css('left', newLeft + '%');

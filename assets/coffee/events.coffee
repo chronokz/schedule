@@ -178,6 +178,9 @@ $('#schedule thead').mousemove (e) ->
 $('#schedule thead').on 'mouseup', 'th', (e) ->
 	monthMouse = 0
 
+$('#schedule thead').on 'mouseout', 'th', (e) ->
+	monthMouse = 0
+
 
 # Form
 $('#schedule_form form').submit ->
@@ -186,7 +189,7 @@ $('#schedule_form form').submit ->
 	currentLabel.attr 'class', 'label label-primary label-td'
 	currentLabel.addClass 'label-td-'+$(this).find('#input-status').val()
 
-	if $('#input-laterin').prop('checked')
+	if $('#input-earlyin').prop('checked')
 		newLeft = parseInt(currentLabel[0].style.left)+25
 		newWidth = parseInt(currentLabel[0].style.width)-25
 		currentLabel.css('left', newLeft+'%')

@@ -8,7 +8,7 @@ html(lang='ru')
 		include block/header
 		.container-fluid
 			.row
-				.col-md-3
+				.left_col
 					table#variants.variants.table.table-bordered.table-striped
 						thead
 							tr
@@ -40,7 +40,7 @@ html(lang='ru')
 								td 1
 								td 1
 								td 0-1
-				.col-md-9
+				.right_col
 					div.limiter
 						table#schedule.table.table-bordered.table-striped
 							thead
@@ -51,16 +51,16 @@ html(lang='ru')
 				.col-md-3
 					ul.tooltipList
 						li
-							.label.label-td-green 
+							.label.label-td.label-td-green 
 							| Подтверждено
 						li
-							.label.label-td-blue 
+							.label.label-td.label-td-blue 
 							| Заблокирован(бронируется)
 						li
-							.label.label-td-yellow 
+							.label.label-td.label-td-yellow 
 							| Забронирован
 						li
-							.label.label-td-red 
+							.label.label-td.label-td-red 
 							| Не работает
 				.col-md-4
 					ul.tooltipList

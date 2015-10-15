@@ -17,11 +17,19 @@ li {
   margin: 0;
   padding: 0;
 }
+.left_col {
+  width: 25%;
+  float: left;
+}
+.right_col {
+  width: 75%;
+  float: left;
+}
 table.variants {
   border: 0;
 }
 table.variants thead th {
-  height: 59px;
+  height: 57px;
   color: #fff;
   font-weight: normal;
   border: 0 !important;
@@ -40,6 +48,7 @@ table.variants tbody tr:nth-child(even) {
 table.variants td {
   border: 0 !important;
   border-bottom: 1px solid #deebed !important;
+  height: 37px;
 }
 #schedule {
   width: auto;
@@ -49,6 +58,7 @@ table.variants td {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  border-top: 0;
 }
 #schedule th {
   border: 0;
@@ -99,13 +109,12 @@ table.variants td {
   cursor: move;
   min-width: 100%;
   margin: 8px 0;
-  line-height: 14px;
 }
 .label-td {
-  -webkit-border-radius: 50px;
-  border-radius: 50px;
-  -webkit-box-shadow: inset 1px 1px 7px -2px #333;
-  box-shadow: inset 1px 1px 7px -2px #333;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  line-height: 16px;
+  text-align: left;
 }
 .label-td-green {
   background: #6eba44;
