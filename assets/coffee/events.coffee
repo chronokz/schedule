@@ -25,6 +25,8 @@ check_collision = (currentLabelTr, currentLabelTd) ->
 	for i of busytd
 		for n of busytd[i]
 			if busytd[i][n][0] == currentLabelTr && busytd[i][n][1] == currentLabelTd && parseInt(i) != parseInt(currentLabel.data('index'))
+				console.info i
+				console.info currentLabel.data('index')
 				return true
 	return false
 
@@ -36,17 +38,20 @@ check_collision = (currentLabelTr, currentLabelTd) ->
 # New Instance
 $('#schedule tbody').on 'mousedown', 'td', (e) -> 
 	if e.which == 1
-		mouseIsDown = true
-		mouseElStart = $(this)
-		currentLabel = $('<div class="label label-primary label-td">&nbsp;</div>')
-		labelTrLevel = $(this).closest('tr').index()
-		$(this).append(currentLabel)
+		tr_level = $(this).index()
+		td_level = $(this).closest('tr').index()
+		if !check_collision(tr_level, td_level)
+			mouseIsDown = true
+			mouseElStart = $(this)
+			currentLabel = $('<div class="label label-primary label-td">&nbsp;</div>')
+			labelTrLevel = $(this).closest('tr').index()
+			$(this).append(currentLabel)
 
-		range = $(this).width()/2-e.offsetX
-		if range > 0
-			currentLabel.css('left', '25%')
-		else
-			currentLabel.css('left', '75%')
+			range = $(this).width()/2-e.offsetX
+			if range > 0
+				currentLabel.css('left', '25%')
+			else
+				currentLabel.css('left', '75%')
 		
 
 $('#schedule tbody').on 'mouseup', 'td', (e) ->
@@ -82,11 +87,18 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 				currentLabel.css('width', width+'%')
 				currentLabel.css('z-index', 100)
 
+				left = currentLabel[0].style.left
 				range = $(this).width()/2-e.offsetX
 				if range > 0
-					width-=0
+					if (left == '25%')
+						width-=0
+					else
+						width-=50
 				else
-					width+=50
+					if (left == '25%')
+						width+=25
+					else
+						width-=25
 				currentLabel.css('width', width+'%')
 
 				$('#schedule_form').modal 'show'
@@ -134,30 +146,46 @@ $('#schedule tbody').on 'mousemove', 'td', (e) ->
 
 			if !isCollision
 				width = (mouseElCurrent.index()-mouseElStart.index())*100
-
+				left = currentLabel[0].style.left
 				range = $(this).width()/2-e.offsetX
 				if range > 0
-					width-=0
+					if (left == '25%')
+						width-=0
+					else
+						width-=50
 				else
-					width+=50
+					if (left == '25%')
+						width+=25
+					else
+						width-=25
 				currentLabel.css('width', width+'%')
 			
 
 # $('#schedule tbody').on 'mousemove', '.label-td', (e) ->
 # 	console.info e
 
+
 # Label
+dbl = 0
+setInterval (->
+  dbl = 0
+  return
+), 500
+
 $('#schedule tbody').on 'mousedown', '.label-td', (e) ->
-	console.info 'mousedown'
-	if e.which == 1
-		labelDrag = true
-		mouseIsDown = true
-		e.stopPropagation()
-		currentLabel = $(this)
-		labelTdLevel = $(this).closest('td').index()
+	console.log 'mousedown'
+	dbl++
+	if dbl > 0
+		$(this).dblclick()
+	else
+		if e.which == 1
+			labelDrag = true
+			mouseIsDown = true
+			e.stopPropagation()
+			currentLabel = $(this)
+			labelTdLevel = $(this).closest('td').index()
 
 $('#schedule tbody').on 'dblclick', '.label-td', (e) ->
-	console.info 'dblclick'
 	if e.which == 1
 		currentLabel = $(this)
 		$('#schedule_form').modal 'show'

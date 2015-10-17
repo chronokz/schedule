@@ -1,4 +1,4 @@
-var busytd, check_collision, currentDate, currentDay, currentLabel, currentYear, labelDrag, labelIndex, labelTdLevel, labelTrLevel, monthMouse, monthMouseLeft, mouseElCurrent, mouseElFinish, mouseElStart, mouseIsDown;
+var busytd, check_collision, currentDate, currentDay, currentLabel, currentYear, dbl, labelDrag, labelIndex, labelTdLevel, labelTrLevel, monthMouse, monthMouseLeft, mouseElCurrent, mouseElFinish, mouseElStart, mouseIsDown;
 
 mouseIsDown = false;
 
@@ -39,6 +39,8 @@ check_collision = function(currentLabelTr, currentLabelTd) {
   for (i in busytd) {
     for (n in busytd[i]) {
       if (busytd[i][n][0] === currentLabelTr && busytd[i][n][1] === currentLabelTd && parseInt(i) !== parseInt(currentLabel.data('index'))) {
+        console.info(i);
+        console.info(currentLabel.data('index'));
         return true;
       }
     }
@@ -54,24 +56,28 @@ check_collision = function(currentLabelTr, currentLabelTd) {
  */
 
 $('#schedule tbody').on('mousedown', 'td', function(e) {
-  var range;
+  var range, td_level, tr_level;
   if (e.which === 1) {
-    mouseIsDown = true;
-    mouseElStart = $(this);
-    currentLabel = $('<div class="label label-primary label-td">&nbsp;</div>');
-    labelTrLevel = $(this).closest('tr').index();
-    $(this).append(currentLabel);
-    range = $(this).width() / 2 - e.offsetX;
-    if (range > 0) {
-      return currentLabel.css('left', '25%');
-    } else {
-      return currentLabel.css('left', '75%');
+    tr_level = $(this).index();
+    td_level = $(this).closest('tr').index();
+    if (!check_collision(tr_level, td_level)) {
+      mouseIsDown = true;
+      mouseElStart = $(this);
+      currentLabel = $('<div class="label label-primary label-td">&nbsp;</div>');
+      labelTrLevel = $(this).closest('tr').index();
+      $(this).append(currentLabel);
+      range = $(this).width() / 2 - e.offsetX;
+      if (range > 0) {
+        return currentLabel.css('left', '25%');
+      } else {
+        return currentLabel.css('left', '75%');
+      }
     }
   }
 });
 
 $('#schedule tbody').on('mouseup', 'td', function(e) {
-  var i, range, td_level, tr_level, width;
+  var i, left, range, td_level, tr_level, width;
   if (e.which === 1) {
     mouseIsDown = false;
     if (labelDrag) {
@@ -104,11 +110,20 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
         width = (mouseElFinish.index() - mouseElStart.index()) * 100;
         currentLabel.css('width', width + '%');
         currentLabel.css('z-index', 100);
+        left = currentLabel[0].style.left;
         range = $(this).width() / 2 - e.offsetX;
         if (range > 0) {
-          width -= 0;
+          if (left === '25%') {
+            width -= 0;
+          } else {
+            width -= 50;
+          }
         } else {
-          width += 50;
+          if (left === '25%') {
+            width += 25;
+          } else {
+            width -= 25;
+          }
         }
         currentLabel.css('width', width + '%');
         $('#schedule_form').modal('show');
@@ -128,7 +143,7 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
 });
 
 $('#schedule tbody').on('mousemove', 'td', function(e) {
-  var i, isCollision, len, range, td_level, tr_level, width;
+  var i, isCollision, left, len, range, td_level, tr_level, width;
   if (mouseIsDown) {
     if (labelDrag) {
       tr_level = $(this).closest('tr').index();
@@ -158,11 +173,20 @@ $('#schedule tbody').on('mousemove', 'td', function(e) {
       }
       if (!isCollision) {
         width = (mouseElCurrent.index() - mouseElStart.index()) * 100;
+        left = currentLabel[0].style.left;
         range = $(this).width() / 2 - e.offsetX;
         if (range > 0) {
-          width -= 0;
+          if (left === '25%') {
+            width -= 0;
+          } else {
+            width -= 50;
+          }
         } else {
-          width += 50;
+          if (left === '25%') {
+            width += 25;
+          } else {
+            width -= 25;
+          }
         }
         return currentLabel.css('width', width + '%');
       }
@@ -170,19 +194,29 @@ $('#schedule tbody').on('mousemove', 'td', function(e) {
   }
 });
 
+dbl = 0;
+
+setInterval((function() {
+  dbl = 0;
+}), 500);
+
 $('#schedule tbody').on('mousedown', '.label-td', function(e) {
-  console.info('mousedown');
-  if (e.which === 1) {
-    labelDrag = true;
-    mouseIsDown = true;
-    e.stopPropagation();
-    currentLabel = $(this);
-    return labelTdLevel = $(this).closest('td').index();
+  console.log('mousedown');
+  dbl++;
+  if (dbl > 0) {
+    return $(this).dblclick();
+  } else {
+    if (e.which === 1) {
+      labelDrag = true;
+      mouseIsDown = true;
+      e.stopPropagation();
+      currentLabel = $(this);
+      return labelTdLevel = $(this).closest('td').index();
+    }
   }
 });
 
 $('#schedule tbody').on('dblclick', '.label-td', function(e) {
-  console.info('dblclick');
   if (e.which === 1) {
     currentLabel = $(this);
     $('#schedule_form').modal('show');
