@@ -49,11 +49,13 @@ $('#schedule tbody').on 'mousedown', 'td', (e) ->
 
 			$(this).append(currentLabel)
 
-			range = $(this).width()/2-e.offsetX
-			if range > 0
-				currentLabel.css('left', '25%')
-			else
-				currentLabel.css('left', '75%')
+			currentLabel.css('left', '50%')
+
+			# range = $(this).width()/2-e.offsetX
+			# if range > 0
+			# 	currentLabel.css('left', '25%')
+			# else
+			# 	currentLabel.css('left', '75%')
 		else
 			currentLabel = null
 
@@ -150,17 +152,17 @@ $('#schedule tbody').on 'mousemove', 'td', (e) ->
 			if !isCollision
 				width = (mouseElCurrent.index()-mouseElStart.index())*100
 				left = currentLabel[0].style.left
-				range = $(this).width()/2-e.offsetX
-				if range > 0
-					if (left == '25%')
-						width-=0
-					else
-						width-=50
-				else
-					if (left == '25%')
-						width+=25
-					else
-						width-=25
+				# range = $(this).width()/2-e.offsetX
+				# if range > 0
+				# 	if (left == '25%')
+				# 		width-=0
+				# 	else
+				# 		width-=50
+				# else
+				# 	if (left == '25%')
+				# 		width+=25
+				# 	else
+				# 		width-=25
 				currentLabel.css('width', width+'%')
 			
 
