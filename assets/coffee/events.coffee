@@ -24,9 +24,10 @@ $('#schedule').css('left', monthMouseLeft)
 check_collision = (currentLabelTr, currentLabelTd) ->
 	for i of busytd
 		for n of busytd[i]
+			# console.info busytd[i][n][0], currentLabelTr
+			# console.log busytd[i][n][1], currentLabelTd
+			# console.log parseInt(i), parseInt(currentLabel.data('index'))
 			if busytd[i][n][0] == currentLabelTr && busytd[i][n][1] == currentLabelTd && parseInt(i) != parseInt(currentLabel.data('index'))
-				console.info i
-				console.info currentLabel.data('index')
 				return true
 	return false
 
@@ -38,13 +39,14 @@ check_collision = (currentLabelTr, currentLabelTd) ->
 # New Instance
 $('#schedule tbody').on 'mousedown', 'td', (e) -> 
 	if e.which == 1
-		tr_level = $(this).index()
-		td_level = $(this).closest('tr').index()
+		currentLabel = $('<div class="label label-primary label-td">&nbsp;</div>')
+		td_level = $(this).index()
+		tr_level = $(this).closest('tr').index()
+
 		if !check_collision(tr_level, td_level)
 			mouseIsDown = true
 			mouseElStart = $(this)
-			currentLabel = $('<div class="label label-primary label-td">&nbsp;</div>')
-			labelTrLevel = $(this).closest('tr').index()
+
 			$(this).append(currentLabel)
 
 			range = $(this).width()/2-e.offsetX
@@ -52,7 +54,8 @@ $('#schedule tbody').on 'mousedown', 'td', (e) ->
 				currentLabel.css('left', '25%')
 			else
 				currentLabel.css('left', '75%')
-		
+		else
+			currentLabel = null
 
 $('#schedule tbody').on 'mouseup', 'td', (e) ->
 	if e.which == 1
@@ -81,8 +84,8 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 			labelDrag = false
 		else
 			mouseElFinish = $(this)
-			if mouseElFinish && mouseElStart
-				tr_level = labelTrLevel
+			if mouseElFinish && mouseElStart && currentLabel
+				tr_level = $(this).closest('tr').index()
 				width = (mouseElFinish.index()-mouseElStart.index())*100
 				currentLabel.css('width', width+'%')
 				currentLabel.css('z-index', 100)
@@ -118,6 +121,7 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 
 $('#schedule tbody').on 'mousemove', 'td', (e) ->
 	if mouseIsDown
+		console.log labelDrag
 		if labelDrag
 			tr_level = $(this).closest('tr').index()
 			td_level = labelTdLevel
@@ -129,7 +133,6 @@ $('#schedule tbody').on 'mousemove', 'td', (e) ->
 				if check_collision(tr_level, labelTdLevel+i)
 					isCollision = true
 				i++
-
 			if !isCollision
 				currentLabel.appendTo($('#schedule tbody tr:eq('+tr_level+') td:eq('+td_level+')'))
 			
@@ -175,7 +178,7 @@ setInterval (->
 $('#schedule tbody').on 'mousedown', '.label-td', (e) ->
 	console.log 'mousedown'
 	dbl++
-	if dbl > 0
+	if dbl > 1
 		$(this).dblclick()
 	else
 		if e.which == 1

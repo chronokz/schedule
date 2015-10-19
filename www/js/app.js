@@ -39,8 +39,6 @@ check_collision = function(currentLabelTr, currentLabelTd) {
   for (i in busytd) {
     for (n in busytd[i]) {
       if (busytd[i][n][0] === currentLabelTr && busytd[i][n][1] === currentLabelTd && parseInt(i) !== parseInt(currentLabel.data('index'))) {
-        console.info(i);
-        console.info(currentLabel.data('index'));
         return true;
       }
     }
@@ -58,13 +56,12 @@ check_collision = function(currentLabelTr, currentLabelTd) {
 $('#schedule tbody').on('mousedown', 'td', function(e) {
   var range, td_level, tr_level;
   if (e.which === 1) {
-    tr_level = $(this).index();
-    td_level = $(this).closest('tr').index();
+    currentLabel = $('<div class="label label-primary label-td">&nbsp;</div>');
+    td_level = $(this).index();
+    tr_level = $(this).closest('tr').index();
     if (!check_collision(tr_level, td_level)) {
       mouseIsDown = true;
       mouseElStart = $(this);
-      currentLabel = $('<div class="label label-primary label-td">&nbsp;</div>');
-      labelTrLevel = $(this).closest('tr').index();
       $(this).append(currentLabel);
       range = $(this).width() / 2 - e.offsetX;
       if (range > 0) {
@@ -72,6 +69,8 @@ $('#schedule tbody').on('mousedown', 'td', function(e) {
       } else {
         return currentLabel.css('left', '75%');
       }
+    } else {
+      return currentLabel = null;
     }
   }
 });
@@ -105,8 +104,8 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
       return labelDrag = false;
     } else {
       mouseElFinish = $(this);
-      if (mouseElFinish && mouseElStart) {
-        tr_level = labelTrLevel;
+      if (mouseElFinish && mouseElStart && currentLabel) {
+        tr_level = $(this).closest('tr').index();
         width = (mouseElFinish.index() - mouseElStart.index()) * 100;
         currentLabel.css('width', width + '%');
         currentLabel.css('z-index', 100);
@@ -145,6 +144,7 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
 $('#schedule tbody').on('mousemove', 'td', function(e) {
   var i, isCollision, left, len, range, td_level, tr_level, width;
   if (mouseIsDown) {
+    console.log(labelDrag);
     if (labelDrag) {
       tr_level = $(this).closest('tr').index();
       td_level = labelTdLevel;
@@ -203,7 +203,7 @@ setInterval((function() {
 $('#schedule tbody').on('mousedown', '.label-td', function(e) {
   console.log('mousedown');
   dbl++;
-  if (dbl > 0) {
+  if (dbl > 1) {
     return $(this).dblclick();
   } else {
     if (e.which === 1) {
