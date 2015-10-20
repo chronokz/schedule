@@ -92,7 +92,7 @@ table.variants
 		&:before
 			position absolute
 			content ' '
-			background-color orange
+			// background-color orange
 			top 0
 			bottom 0
 			left -(column_width/4)
@@ -105,7 +105,7 @@ table.variants
 		&:after
 			position absolute
 			content ' '
-			background-color orange
+			// background-color orange
 			top 0
 			bottom 0
 			right -(column_width/4)
@@ -121,12 +121,28 @@ table.variants
 
 .label-td-green
 	background #6eba44
+	&:after
+		background-color #6eba44
+	&:before
+		background-color #6eba44
 .label-td-blue
 	background #00bede
+	&:after
+		background-color #00bede
+	&:before
+		background-color #00bede
 .label-td-yellow
 	background #ffc30b
+	&:after
+		background-color #ffc30b
+	&:before
+		background-color #ffc30b
 .label-td-red
 	background #f05c1b
+	&:after
+		background-color #f05c1b
+	&:before
+		background-color #f05c1b
 	
 .limiter
 	overflow hidden

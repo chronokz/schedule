@@ -119,7 +119,6 @@ table.variants td {
 #schedule .label-td.earlyin:before {
   position: absolute;
   content: ' ';
-  background-color: #ffa500;
   top: 0;
   bottom: 0;
   left: -15px;
@@ -134,7 +133,6 @@ table.variants td {
 #schedule .label-td.laterout:after {
   position: absolute;
   content: ' ';
-  background-color: #ffa500;
   top: 0;
   bottom: 0;
   right: -15px;
@@ -151,14 +149,38 @@ table.variants td {
 .label-td-green {
   background: #6eba44;
 }
+.label-td-green:after {
+  background-color: #6eba44;
+}
+.label-td-green:before {
+  background-color: #6eba44;
+}
 .label-td-blue {
   background: #00bede;
+}
+.label-td-blue:after {
+  background-color: #00bede;
+}
+.label-td-blue:before {
+  background-color: #00bede;
 }
 .label-td-yellow {
   background: #ffc30b;
 }
+.label-td-yellow:after {
+  background-color: #ffc30b;
+}
+.label-td-yellow:before {
+  background-color: #ffc30b;
+}
 .label-td-red {
   background: #f05c1b;
+}
+.label-td-red:after {
+  background-color: #f05c1b;
+}
+.label-td-red:before {
+  background-color: #f05c1b;
 }
 .limiter {
   overflow: hidden;
