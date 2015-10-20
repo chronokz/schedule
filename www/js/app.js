@@ -1,4 +1,4 @@
-var busytd, check_collision, create_label, currentDate, currentDay, currentLabel, currentYear, dbl, edit_label, labelDrag, labelIndex, labelTdLevel, labelTrLevel, monthMouse, monthMouseLeft, mouseElCurrent, mouseElFinish, mouseElStart, mouseIsDown;
+var busytd, check_collision, create_label, currentDate, currentDay, currentLabel, currentYear, dbl, edit_label, first_index, labelDrag, labelIndex, labelTdLevel, labelTrLevel, last_index, level_index, monthMouse, monthMouseLeft, mouseElCurrent, mouseElFinish, mouseElStart, mouseIsDown;
 
 mouseIsDown = false;
 
@@ -38,9 +38,6 @@ check_collision = function(currentLabelTr, currentLabelTd) {
   var i, n;
   for (i in busytd) {
     for (n in busytd[i]) {
-      console.info(busytd[i][n][0], currentLabelTr);
-      console.log(busytd[i][n][1], currentLabelTd);
-      console.log(parseInt(i), parseInt(currentLabel.data('index')));
       if (busytd[i][n][0] === currentLabelTr && busytd[i][n][1] === currentLabelTd) {
         return true;
       }
@@ -58,7 +55,6 @@ check_collision = function(currentLabelTr, currentLabelTd) {
 
 $('#schedule tbody').on('mousedown', 'td', function(e) {
   var td_level, tr_level;
-  console.info('newinit');
   if (e.which === 1) {
     currentLabel = $('<div class="label label-primary label-td">&nbsp;</div>');
     td_level = $(this).index();
@@ -79,8 +75,8 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
   if (e.which === 1) {
     mouseIsDown = false;
     if (labelDrag) {
-      tr_level = $(this).closest('tr').index();
-      td_level = labelTdLevel;
+      tr_level = level_index();
+      td_level = first_index();
       currentLabel.appendTo($('#schedule tbody tr:eq(' + tr_level + ') td:eq(' + td_level + ')'));
 
       /*			len = Math.floor(parseInt(currentLabel[0].style.width)/100)
@@ -104,7 +100,7 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
     } else {
       mouseElFinish = $(this);
       if (mouseElFinish && mouseElStart && currentLabel) {
-        tr_level = $(this).closest('tr').index();
+        tr_level = level_index();
         width = (mouseElFinish.index() - mouseElStart.index()) * 100;
         currentLabel.css('width', width + '%');
         currentLabel.css('z-index', 100);
@@ -112,8 +108,8 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
         currentLabel.css('width', width + '%');
         create_label();
         busytd[labelIndex] = [];
-        i = mouseElStart.index();
-        while (i < mouseElFinish.index()) {
+        i = first_index();
+        while (i < last_index()) {
           busytd[labelIndex].push([tr_level, i]);
           i++;
         }
@@ -144,9 +140,7 @@ $('#schedule tbody').on('mousemove', 'td', function(e) {
       }
     } else {
       mouseElCurrent = $(this);
-      tr_level = $(this).closest('tr').index();
-      i = 0;
-      len = $(this).index() - currentLabel.parent().index();
+      isCollision = false;
       if (!isCollision) {
         width = (mouseElCurrent.index() - mouseElStart.index()) * 100;
         return currentLabel.css('width', width + '%');
@@ -183,6 +177,18 @@ $('#schedule tbody').on('dblclick', '.label-td', function(e) {
   }
 });
 
+first_index = function() {
+  return currentLabel.parent().index();
+};
+
+last_index = function() {
+  return currentLabel.parent().index() + (parseInt(currentLabel[0].style.width) / 100);
+};
+
+level_index = function() {
+  return currentLabel.closest('tr').index();
+};
+
 edit_label = function() {
   $('#schedule_form').modal('show');
   $('#schedule_form').addClass('edit');
@@ -196,16 +202,14 @@ create_label = function() {
 };
 
 $('#input-earlyin').click(function() {
-  if (check_collision(currentLabel.closest('tr').index(), currentLabel.parent().index())) {
+  if (check_collision(currentLabel.closest('tr').index(), first_index())) {
     alert('Ранний заезд невозможен!');
     return $(this).prop('checked', false);
   }
 });
 
 $('#input-laterout').click(function() {
-  var last_td;
-  last_td = currentLabel.parent().index() + (parseInt(currentLabel[0].style.width) / 100);
-  if (check_collision(currentLabel.closest('tr').index(), last_td)) {
+  if (check_collision(currentLabel.closest('tr').index(), last_index())) {
     alert('Поздний выезд невозможен!');
     return $(this).prop('checked', false);
   }
