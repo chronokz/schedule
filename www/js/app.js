@@ -1,4 +1,4 @@
-var busytd, check_collision, currentDate, currentDay, currentLabel, currentYear, dbl, labelDrag, labelIndex, labelTdLevel, labelTrLevel, monthMouse, monthMouseLeft, mouseElCurrent, mouseElFinish, mouseElStart, mouseIsDown;
+var busytd, check_collision, currentDate, currentDay, currentLabel, currentYear, dbl, edit_label, labelDrag, labelIndex, labelTdLevel, labelTrLevel, monthMouse, monthMouseLeft, mouseElCurrent, mouseElFinish, mouseElStart, mouseIsDown;
 
 mouseIsDown = false;
 
@@ -55,6 +55,7 @@ check_collision = function(currentLabelTr, currentLabelTd) {
 
 $('#schedule tbody').on('mousedown', 'td', function(e) {
   var td_level, tr_level;
+  console.info('newinit');
   if (e.which === 1) {
     currentLabel = $('<div class="label label-primary label-td">&nbsp;</div>');
     td_level = $(this).index();
@@ -71,7 +72,7 @@ $('#schedule tbody').on('mousedown', 'td', function(e) {
 });
 
 $('#schedule tbody').on('mouseup', 'td', function(e) {
-  var i, left, range, td_level, tr_level, width;
+  var i, left, td_level, tr_level, width;
   if (e.which === 1) {
     mouseIsDown = false;
     if (labelDrag) {
@@ -105,20 +106,6 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
         currentLabel.css('width', width + '%');
         currentLabel.css('z-index', 100);
         left = currentLabel[0].style.left;
-        range = $(this).width() / 2 - e.offsetX;
-        if (range > 0) {
-          if (left === '25%') {
-            width -= 0;
-          } else {
-            width -= 50;
-          }
-        } else {
-          if (left === '25%') {
-            width += 25;
-          } else {
-            width -= 25;
-          }
-        }
         currentLabel.css('width', width + '%');
         $('#schedule_form').modal('show');
         $('#schedule_form').addClass('create');
@@ -137,9 +124,8 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
 });
 
 $('#schedule tbody').on('mousemove', 'td', function(e) {
-  var i, isCollision, left, len, td_level, tr_level, width;
+  var i, isCollision, len, td_level, tr_level, width;
   if (mouseIsDown) {
-    console.log(labelDrag);
     if (labelDrag) {
       tr_level = $(this).closest('tr').index();
       td_level = labelTdLevel;
@@ -160,15 +146,8 @@ $('#schedule tbody').on('mousemove', 'td', function(e) {
       tr_level = $(this).closest('tr').index();
       i = currentLabel.parent().index();
       isCollision = false;
-      while (i < $(this).index()) {
-        i++;
-        if (check_collision(tr_level, $(this).index())) {
-          isCollision = true;
-        }
-      }
       if (!isCollision) {
         width = (mouseElCurrent.index() - mouseElStart.index()) * 100;
-        left = currentLabel[0].style.left;
         return currentLabel.css('width', width + '%');
       }
     }
@@ -177,20 +156,21 @@ $('#schedule tbody').on('mousemove', 'td', function(e) {
 
 dbl = 0;
 
-setInterval((function() {
-  dbl = 0;
-}), 500);
-
 $('#schedule tbody').on('mousedown', '.label-td', function(e) {
-  console.log('mousedown');
+  setTimeout((function() {
+    return dbl = 0;
+  }), 700);
   dbl++;
+  e.stopPropagation();
   if (dbl > 1) {
-    return $(this).dblclick();
+    console.info('predblclick');
+    dbl = 0;
+    return edit_label();
   } else {
+    labelDrag = true;
+    console.log('mousedown');
     if (e.which === 1) {
-      labelDrag = true;
       mouseIsDown = true;
-      e.stopPropagation();
       currentLabel = $(this);
       return labelTdLevel = $(this).closest('td').index();
     }
@@ -200,11 +180,15 @@ $('#schedule tbody').on('mousedown', '.label-td', function(e) {
 $('#schedule tbody').on('dblclick', '.label-td', function(e) {
   if (e.which === 1) {
     currentLabel = $(this);
-    $('#schedule_form').modal('show');
-    $('#schedule_form').addClass('edit');
-    return $('#schedule_form #input-name').val($(this).text());
+    return edit_label();
   }
 });
+
+edit_label = function() {
+  $('#schedule_form').modal('show');
+  $('#schedule_form').addClass('edit');
+  return $('#schedule_form #input-name').val(currentLabel.text());
+};
 
 $('#schedule thead').on('mousedown', 'th', function(e) {
   monthMouse = e.pageX;
@@ -228,20 +212,19 @@ $('#schedule thead').on('mouseout', 'th', function(e) {
 });
 
 $('#schedule_form form').submit(function() {
-  var newLeft, newWidth;
   $('#schedule_form').modal('hide');
   currentLabel.text($(this).find('#input-name').val());
   currentLabel.attr('class', 'label label-primary label-td');
   currentLabel.addClass('label-td-' + $(this).find('#input-status').val());
   if ($('#input-earlyin').prop('checked')) {
-    newLeft = parseInt(currentLabel[0].style.left) + 25;
-    newWidth = parseInt(currentLabel[0].style.width) - 25;
-    currentLabel.css('left', newLeft + '%');
-    currentLabel.css('width', newWidth + '%');
+    currentLabel.addClass('earlyin');
+  } else {
+    currentLabel.removeClass('earlyin');
   }
   if ($('#input-laterout').prop('checked')) {
-    newWidth = parseInt(currentLabel[0].style.width) + 25;
-    currentLabel.css('width', newWidth + '%');
+    currentLabel.addClass('laterout');
+  } else {
+    currentLabel.removeClass('laterout');
   }
   $('#schedule_form').removeClass('create').removeClass('edit');
   return false;
@@ -261,6 +244,19 @@ $('#schedule_form form .action_remove').click(function() {
   $('#schedule_form').removeClass('create').removeClass('edit');
   currentLabel.remove();
   return busytd[currentLabel.data('index')] = [];
+});
+
+$('#schedule_form').click(function() {
+  $('#schedule_form').modal('hide');
+  if ($('#schedule_form').hasClass('create')) {
+    currentLabel.remove();
+    busytd[currentLabel.data('index')] = [];
+  }
+  return $('#schedule_form').removeClass('create').removeClass('edit');
+});
+
+$('#schedule_form .modal-dialog').click(function(e) {
+  return e.stopPropagation();
 });
 
 var d, date, dayInMonth, dayOfWeek, m, month, td, v, variants, weeks, y, yd;

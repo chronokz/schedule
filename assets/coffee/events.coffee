@@ -38,6 +38,7 @@ check_collision = (currentLabelTr, currentLabelTd) ->
 
 # New Instance
 $('#schedule tbody').on 'mousedown', 'td', (e) -> 
+	console.info 'newinit'
 	if e.which == 1
 		currentLabel = $('<div class="label label-primary label-td">&nbsp;</div>')
 		td_level = $(this).index()
@@ -93,17 +94,17 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 				currentLabel.css('z-index', 100)
 
 				left = currentLabel[0].style.left
-				range = $(this).width()/2-e.offsetX
-				if range > 0
-					if (left == '25%')
-						width-=0
-					else
-						width-=50
-				else
-					if (left == '25%')
-						width+=25
-					else
-						width-=25
+				# range = $(this).width()/2-e.offsetX
+				# if range > 0
+				# 	if (left == '25%')
+				# 		width-=0
+				# 	else
+				# 		width-=50
+				# else
+				# 	if (left == '25%')
+				# 		width+=25
+				# 	else
+				# 		width-=25
 				currentLabel.css('width', width+'%')
 
 				$('#schedule_form').modal 'show'
@@ -123,7 +124,7 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 
 $('#schedule tbody').on 'mousemove', 'td', (e) ->
 	if mouseIsDown
-		console.log labelDrag
+		# console.log labelDrag
 		if labelDrag
 			tr_level = $(this).closest('tr').index()
 			td_level = labelTdLevel
@@ -144,14 +145,14 @@ $('#schedule tbody').on 'mousemove', 'td', (e) ->
 		
 			i = currentLabel.parent().index()
 			isCollision = false
-			while i<$(this).index()
-				i++
-				if check_collision(tr_level, $(this).index())
-					isCollision = true
+			# while i<$(this).index()
+			# 	i++
+			# 	if check_collision(tr_level, $(this).index())
+			# 		isCollision = true
 
 			if !isCollision
 				width = (mouseElCurrent.index()-mouseElStart.index())*100
-				left = currentLabel[0].style.left
+				# left = currentLabel[0].style.left
 				# range = $(this).width()/2-e.offsetX
 				# if range > 0
 				# 	if (left == '25%')
@@ -172,30 +173,36 @@ $('#schedule tbody').on 'mousemove', 'td', (e) ->
 
 # Label
 dbl = 0
-setInterval (->
-  dbl = 0
-  return
-), 500
 
 $('#schedule tbody').on 'mousedown', '.label-td', (e) ->
-	console.log 'mousedown'
+	setTimeout (->
+		dbl = 0
+	), 700
 	dbl++
+	e.stopPropagation()
 	if dbl > 1
-		$(this).dblclick()
+		# $(this).dblclick()
+		console.info 'predblclick'
+		dbl = 0
+		edit_label()
 	else
+		labelDrag = true
+		console.log 'mousedown'
 		if e.which == 1
-			labelDrag = true
 			mouseIsDown = true
-			e.stopPropagation()
 			currentLabel = $(this)
 			labelTdLevel = $(this).closest('td').index()
 
 $('#schedule tbody').on 'dblclick', '.label-td', (e) ->
 	if e.which == 1
 		currentLabel = $(this)
-		$('#schedule_form').modal 'show'
-		$('#schedule_form').addClass 'edit'
-		$('#schedule_form #input-name').val($(this).text())
+		edit_label()
+
+edit_label = -> 
+	$('#schedule_form').modal 'show'
+	$('#schedule_form').addClass 'edit'
+	$('#schedule_form #input-name').val(currentLabel.text())
+
 
 # Month
 $('#schedule thead').on 'mousedown', 'th', (e) ->
@@ -223,14 +230,32 @@ $('#schedule_form form').submit ->
 	currentLabel.addClass 'label-td-'+$(this).find('#input-status').val()
 
 	if $('#input-earlyin').prop('checked')
-		newLeft = parseInt(currentLabel[0].style.left)+25
-		newWidth = parseInt(currentLabel[0].style.width)-25
-		currentLabel.css('left', newLeft+'%')
-		currentLabel.css('width', newWidth+'%')
+		currentLabel.addClass 'earlyin'
+	else
+		currentLabel.removeClass 'earlyin'
 
 	if $('#input-laterout').prop('checked')
-		newWidth = parseInt(currentLabel[0].style.width)+25
-		currentLabel.css('width', newWidth+'%')
+		currentLabel.addClass 'laterout'
+	else
+		currentLabel.removeClass 'laterout'
+
+	# if currentLabel.hasClass 'earlyin'
+	# 	newLeft = parseInt(currentLabel[0].style.left)-25
+	# 	newWidth = parseInt(currentLabel[0].style.width)+25
+	# 	currentLabel.css('left', newLeft+'%')
+	# 	currentLabel.css('width', newWidth+'%')
+	# else
+	# 	newLeft = parseInt(currentLabel[0].style.left)+25
+	# 	newWidth = parseInt(currentLabel[0].style.width)-25
+	# 	currentLabel.css('left', newLeft+'%')
+	# 	currentLabel.css('width', newWidth+'%')
+
+	# if currentLabel.hasClass 'laterout'
+	# 	newWidth = parseInt(currentLabel[0].style.width)+25
+	# 	currentLabel.css('width', newWidth+'%')
+	# else
+	# 	newWidth = parseInt(currentLabel[0].style.width)-25
+	# 	currentLabel.css('width', newWidth+'%')
 
 	$('#schedule_form').removeClass('create').removeClass('edit')
 	return false
@@ -247,3 +272,19 @@ $('#schedule_form form .action_remove').click ->
 	$('#schedule_form').removeClass('create').removeClass('edit')
 	currentLabel.remove()
 	busytd[currentLabel.data('index')] = []
+
+# $('#schedule_form').on 'hide.bs.modal', ->
+# 	if $('#schedule_form').hasClass 'create'
+# 		currentLabel.remove()
+# 		busytd[currentLabel.data('index')] = []
+# 	$('#schedule_form').removeClass('create').removeClass('edit')
+
+$('#schedule_form').click ->
+	$('#schedule_form').modal 'hide'
+	if $('#schedule_form').hasClass 'create'
+		currentLabel.remove()
+		busytd[currentLabel.data('index')] = []
+	$('#schedule_form').removeClass('create').removeClass('edit')
+
+$('#schedule_form .modal-dialog').click (e) ->
+	e.stopPropagation();

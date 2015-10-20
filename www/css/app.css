@@ -96,8 +96,8 @@ table.variants td {
   position: absolute;
   right: 0;
   width: 1px;
-  top: 10px;
-  bottom: 10px;
+  top: 6px;
+  bottom: 6px;
   background-color: #a7bcc6;
   z-index: 200;
 }
@@ -109,7 +109,38 @@ table.variants td {
   user-select: none;
   cursor: move;
   min-width: 100%;
-  margin: 8px 0;
+  margin: 6px 0;
+  border: 1px solid #fff;
+}
+#schedule .label-td.earlyin {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+#schedule .label-td.earlyin:before {
+  position: absolute;
+  content: ' ';
+  background-color: #ffa500;
+  top: 0;
+  bottom: 0;
+  left: -15px;
+  width: 15px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+#schedule .label-td.laterout {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+#schedule .label-td.laterout:after {
+  position: absolute;
+  content: ' ';
+  background-color: #ffa500;
+  top: 0;
+  bottom: 0;
+  right: -15px;
+  width: 15px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 .label-td {
   -webkit-border-radius: 5px;

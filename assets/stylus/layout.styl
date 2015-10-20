@@ -1,6 +1,7 @@
 // body
 // 	font size_14/21px Arial
 // 	background color_white
+column_width = 60px
 
 .left_col
 	width 25%
@@ -61,7 +62,7 @@ table.variants
 	padding 0
 
 #schedule td
-	min-width 60px
+	min-width column_width
 	position relative
 	padding 0
 	height 37px
@@ -73,8 +74,8 @@ table.variants
 		position absolute
 		right 0
 		width 1px
-		top 10px
-		bottom 10px
+		top 6px
+		bottom 6px
 		background-color #a7bcc6
 		z-index 200
 	
@@ -83,7 +84,34 @@ table.variants
 	user-select none
 	cursor move
 	min-width 100%
-	margin 8px 0
+	margin 6px 0
+	border 1px solid #fff
+	&.earlyin
+		border-top-left-radius 0
+		border-bottom-left-radius 0
+		&:before
+			position absolute
+			content ' '
+			background-color orange
+			top 0
+			bottom 0
+			left -(column_width/4)
+			width (column_width/4)
+			border-top-left-radius 5px
+			border-bottom-left-radius 5px
+	&.laterout
+		border-top-right-radius 0
+		border-bottom-right-radius 0
+		&:after
+			position absolute
+			content ' '
+			background-color orange
+			top 0
+			bottom 0
+			right -(column_width/4)
+			width (column_width/4)
+			border-top-right-radius 5px
+			border-bottom-right-radius 5px
 	
 .label-td
 	border-radius 5px
