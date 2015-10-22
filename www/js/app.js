@@ -183,6 +183,9 @@ $('#schedule tbody').on('mousemove', 'td', function(e) {
           isCollision = true;
         }
       }
+      if ($('#schedule tbody tr:eq(' + tr_level + ') td:eq(' + (first_index() + len + 1) + ') .label-td.earlyin').length) {
+        isCollision = true;
+      }
       if ($(this).index() < first_index() + len) {
         isCollision = false;
       }
