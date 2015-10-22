@@ -43,11 +43,12 @@ check_collision = function(currentLabelTr, currentLabelTd, allow_self) {
   }
   for (i in busytd) {
     for (n in busytd[i]) {
-      console.info(busytd[i][n][0], currentLabelTr);
-      console.log(busytd[i][n][1], currentLabelTd);
-      console.log(parseInt(i), parseInt(currentLabel.data('index')));
-      if (busytd[i][n][0] === currentLabelTr && busytd[i][n][1] === currentLabelTd) {
-        if (!allow_self && parseInt(i) !== parseInt(currentLabel.data('index'))) {
+      if (!allow_self && currentLabel) {
+        if (busytd[i][n][0] === currentLabelTr && busytd[i][n][1] === currentLabelTd && parseInt(i) !== parseInt(currentLabel.data('index'))) {
+          return true;
+        }
+      } else {
+        if (busytd[i][n][0] === currentLabelTr && busytd[i][n][1] === currentLabelTd) {
           return true;
         }
       }
@@ -216,14 +217,14 @@ create_label = function() {
 };
 
 $('#input-earlyin').click(function() {
-  if (check_collision(currentLabel.closest('tr').index(), first_index(), 1)) {
+  if (check_collision(currentLabel.closest('tr').index(), first_index() - 1, 1)) {
     alert('Ранний заезд невозможен!');
     return $(this).prop('checked', false);
   }
 });
 
 $('#input-laterout').click(function() {
-  if (check_collision(currentLabel.closest('tr').index(), last_index(), 1)) {
+  if (check_collision(currentLabel.closest('tr').index(), last_index() + 1, 1)) {
     alert('Поздний выезд невозможен!');
     return $(this).prop('checked', false);
   }

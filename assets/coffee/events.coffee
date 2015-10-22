@@ -30,14 +30,19 @@ check_collision = (currentLabelTr, currentLabelTd, allow_self) ->
 	else
 		allow_self = false
 
+	# console.log 'allow_self:', allow_self
+
 	for i of busytd
 		for n of busytd[i]
-			console.info busytd[i][n][0], currentLabelTr
-			console.log busytd[i][n][1], currentLabelTd
-			console.log parseInt(i), parseInt(currentLabel.data('index'))
+			# console.info busytd[i][n][0], currentLabelTr
+			# console.log busytd[i][n][1], currentLabelTd
+			# console.log parseInt(i), parseInt(currentLabel.data('index'))
 
-			if busytd[i][n][0] == currentLabelTr && busytd[i][n][1] == currentLabelTd
-				if !allow_self && parseInt(i) != parseInt(currentLabel.data('index'))
+			if !allow_self && currentLabel
+				if busytd[i][n][0] == currentLabelTr && busytd[i][n][1] == currentLabelTd && parseInt(i) != parseInt(currentLabel.data('index'))
+					return true
+			else
+				if busytd[i][n][0] == currentLabelTr && busytd[i][n][1] == currentLabelTd
 					return true
 	return false
 
@@ -128,7 +133,6 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 				currentLabel.attr('data-index', labelIndex)
 				labelIndex++
 
-				
 
 $('#schedule tbody').on 'mousemove', 'td', (e) ->
 	if mouseIsDown
@@ -235,12 +239,12 @@ create_label = ->
 
 
 $('#input-earlyin').click ->
-	if check_collision(currentLabel.closest('tr').index(), first_index(), 1)
+	if check_collision(currentLabel.closest('tr').index(), first_index()-1, 1)
 		alert 'Ранний заезд невозможен!'
 		$(this).prop 'checked', false
 
 $('#input-laterout').click ->
-	if check_collision(currentLabel.closest('tr').index(), last_index(), 1)
+	if check_collision(currentLabel.closest('tr').index(), last_index()+1, 1)
 		alert 'Поздний выезд невозможен!'
 		$(this).prop 'checked', false
 
