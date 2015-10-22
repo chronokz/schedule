@@ -115,11 +115,11 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 			mouseElFinish = $(this)
 			if mouseElFinish && mouseElStart && currentLabel
 				tr_level = level_index()
-				width = (mouseElFinish.index()-mouseElStart.index())*100
-				currentLabel.css('width', width+'%')
+				# width = (mouseElFinish.index()-mouseElStart.index())*100
+				# currentLabel.css('width', width+'%')
 				currentLabel.css('z-index', 100)
 
-				left = currentLabel[0].style.left
+				# left = currentLabel[0].style.left
 				# range = $(this).width()/2-e.offsetX
 				# if range > 0
 				# 	if (left == '25%')
@@ -131,7 +131,7 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 				# 		width+=25
 				# 	else
 				# 		width-=25
-				currentLabel.css('width', width+'%')
+				# currentLabel.css('width', width+'%')
 
 				create_label()
 

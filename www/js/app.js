@@ -107,7 +107,7 @@ $('#schedule tbody').on('mousedown', 'td', function(e) {
 });
 
 $('#schedule tbody').on('mouseup', 'td', function(e) {
-  var i, left, td_level, tr_level, width;
+  var i, td_level, tr_level;
   if (e.which === 1) {
     if (labelDrag) {
       tr_level = level_index();
@@ -136,11 +136,7 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
       mouseElFinish = $(this);
       if (mouseElFinish && mouseElStart && currentLabel) {
         tr_level = level_index();
-        width = (mouseElFinish.index() - mouseElStart.index()) * 100;
-        currentLabel.css('width', width + '%');
         currentLabel.css('z-index', 100);
-        left = currentLabel[0].style.left;
-        currentLabel.css('width', width + '%');
         create_label();
         busytd[labelIndex] = [];
         i = first_index();
