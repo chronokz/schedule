@@ -38,6 +38,9 @@ check_collision = function(currentLabelTr, currentLabelTd) {
   var i, n;
   for (i in busytd) {
     for (n in busytd[i]) {
+      console.info(busytd[i][n][0], currentLabelTr);
+      console.log(busytd[i][n][1], currentLabelTd);
+      console.log(parseInt(i), parseInt(currentLabel.data('index')));
       if (busytd[i][n][0] === currentLabelTr && busytd[i][n][1] === currentLabelTd) {
         return true;
       }
@@ -192,13 +195,17 @@ level_index = function() {
 edit_label = function() {
   $('#schedule_form').modal('show');
   $('#schedule_form').addClass('edit');
-  return $('#schedule_form #input-name').val(currentLabel.text());
+  $('#schedule_form #input-name').val(currentLabel.text());
+  $('#input-earlyin').prop('checked', currentLabel.hasClass('earlyin'));
+  return $('#input-laterout').prop('checked', currentLabel.hasClass('laterout'));
 };
 
 create_label = function() {
   $('#schedule_form').modal('show');
   $('#schedule_form').addClass('create');
-  return $('#schedule_form input').val('');
+  $('#schedule_form input').val('');
+  $('#input-earlyin').prop('checked', false);
+  return $('#input-laterout').prop('checked', false);
 };
 
 $('#input-earlyin').click(function() {

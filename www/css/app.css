@@ -107,10 +107,13 @@ table.variants td {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  cursor: move;
+  cursor: pointer;
   min-width: 100%;
   margin: 6px 0;
   border: 1px solid #fff;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
 #schedule .label-td.earlyin {
   border-top-left-radius: 0;

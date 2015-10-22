@@ -24,9 +24,9 @@ $('#schedule').css('left', monthMouseLeft)
 check_collision = (currentLabelTr, currentLabelTd) ->
 	for i of busytd
 		for n of busytd[i]
-			# console.info busytd[i][n][0], currentLabelTr
-			# console.log busytd[i][n][1], currentLabelTd
-			# console.log parseInt(i), parseInt(currentLabel.data('index'))
+			console.info busytd[i][n][0], currentLabelTr
+			console.log busytd[i][n][1], currentLabelTd
+			console.log parseInt(i), parseInt(currentLabel.data('index'))
 			if busytd[i][n][0] == currentLabelTr && busytd[i][n][1] == currentLabelTd# && parseInt(i) != parseInt(currentLabel.data('index'))
 				return true
 	return false
@@ -213,11 +213,15 @@ edit_label = ->
 	$('#schedule_form').modal 'show'
 	$('#schedule_form').addClass 'edit'
 	$('#schedule_form #input-name').val(currentLabel.text())
+	$('#input-earlyin').prop 'checked', currentLabel.hasClass 'earlyin'
+	$('#input-laterout').prop 'checked', currentLabel.hasClass 'laterout'
 
 create_label = ->
 	$('#schedule_form').modal 'show'
 	$('#schedule_form').addClass 'create'
 	$('#schedule_form input').val('')
+	$('#input-earlyin').prop 'checked', false
+	$('#input-laterout').prop 'checked', false
 
 
 $('#input-earlyin').click ->
