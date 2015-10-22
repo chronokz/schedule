@@ -95,7 +95,6 @@ $('#schedule tbody').on('mousedown', 'td', function(e) {
 $('#schedule tbody').on('mouseup', 'td', function(e) {
   var i, left, td_level, tr_level, width;
   if (e.which === 1) {
-    mouseIsDown = false;
     if (labelDrag) {
       tr_level = level_index();
       td_level = first_index();
@@ -118,8 +117,8 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
         busytd[currentLabel.data('index')].push([tr_level, i]);
         i++;
       }
-      return labelDrag = false;
-    } else {
+      labelDrag = false;
+    } else if (mouseIsDown) {
       mouseElFinish = $(this);
       if (mouseElFinish && mouseElStart && currentLabel) {
         tr_level = level_index();
@@ -136,9 +135,10 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
           i++;
         }
         currentLabel.attr('data-index', labelIndex);
-        return labelIndex++;
+        labelIndex++;
       }
     }
+    return mouseIsDown = false;
   }
 });
 

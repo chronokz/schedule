@@ -89,7 +89,6 @@ $('#schedule tbody').on 'mousedown', 'td', (e) ->
 
 $('#schedule tbody').on 'mouseup', 'td', (e) ->
 	if e.which == 1
-		mouseIsDown = false
 		if labelDrag
 			tr_level = level_index()
 			td_level = first_index()
@@ -112,7 +111,7 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 				busytd[currentLabel.data('index')].push([tr_level, i])
 				i++
 			labelDrag = false
-		else
+		else if mouseIsDown
 			mouseElFinish = $(this)
 			if mouseElFinish && mouseElStart && currentLabel
 				tr_level = level_index()
@@ -144,7 +143,7 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 
 				currentLabel.attr('data-index', labelIndex)
 				labelIndex++
-
+		mouseIsDown = false
 
 $('#schedule tbody').on 'mousemove', 'td', (e) ->
 	if mouseIsDown
