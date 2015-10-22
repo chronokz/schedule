@@ -67,6 +67,10 @@ table.variants td {
   color: #fff;
   font-weight: normal;
   text-transform: uppercase;
+  cursor: move;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+  cursor: grab;
 }
 #schedule th .dayOfWeek {
   text-transform: none;
