@@ -30,7 +30,7 @@ currentYear = new Date(2015, 0, 1);
 
 currentDay = Math.floor((currentDate.getTime() - currentYear.getTime()) / 1000 / 60 / 60 / 24);
 
-monthMouseLeft = -currentDay * 35;
+monthMouseLeft = -currentDay * 60;
 
 $('#schedule').css('left', monthMouseLeft);
 

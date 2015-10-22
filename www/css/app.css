@@ -60,6 +60,9 @@ table.variants td {
   user-select: none;
   border-top: 0;
 }
+#schedule thead {
+  position: relative;
+}
 #schedule th {
   border: 0;
   text-align: center;
