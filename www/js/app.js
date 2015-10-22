@@ -291,6 +291,12 @@ $('#schedule_form .modal-dialog').click(function(e) {
   return e.stopPropagation();
 });
 
+$(document).keyup(function(e) {
+  if (e.keyCode === 27) {
+    return $('#schedule_form .action_cancel').click();
+  }
+});
+
 var d, date, dayInMonth, dayOfWeek, m, month, td, v, variants, weeks, y, yd;
 
 month = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];

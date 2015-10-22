@@ -296,3 +296,7 @@ $('#schedule_form').click ->
 
 $('#schedule_form .modal-dialog').click (e) ->
 	e.stopPropagation();
+
+$(document).keyup (e) ->
+	if e.keyCode == 27
+		$('#schedule_form .action_cancel').click()
