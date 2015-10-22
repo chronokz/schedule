@@ -167,6 +167,9 @@ $('#schedule tbody').on('mousemove', 'td', function(e) {
         }
         i++;
       }
+      if ($('#schedule tbody tr:eq(' + tr_level + ') td:eq(' + (last_index()) + ') .label-td.earlyin').length) {
+        isCollision = true;
+      }
       if (!isCollision) {
         return currentLabel.appendTo($('#schedule tbody tr:eq(' + tr_level + ') td:eq(' + td_level + ')'));
       }

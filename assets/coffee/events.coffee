@@ -159,6 +159,11 @@ $('#schedule tbody').on 'mousemove', 'td', (e) ->
 				if check_collision(tr_level, labelTdLevel+i)
 					isCollision = true
 				i++
+
+			if $('#schedule tbody tr:eq('+tr_level+') td:eq('+(last_index())+') .label-td.earlyin').length
+				isCollision = true
+
+
 			if !isCollision
 				currentLabel.appendTo($('#schedule tbody tr:eq('+tr_level+') td:eq('+td_level+')'))
 			
