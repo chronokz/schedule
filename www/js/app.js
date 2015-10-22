@@ -34,15 +34,22 @@ monthMouseLeft = -currentDay * 35;
 
 $('#schedule').css('left', monthMouseLeft);
 
-check_collision = function(currentLabelTr, currentLabelTd) {
+check_collision = function(currentLabelTr, currentLabelTd, allow_self) {
   var i, n;
+  if (allow_self) {
+    allow_self = true;
+  } else {
+    allow_self = false;
+  }
   for (i in busytd) {
     for (n in busytd[i]) {
       console.info(busytd[i][n][0], currentLabelTr);
       console.log(busytd[i][n][1], currentLabelTd);
       console.log(parseInt(i), parseInt(currentLabel.data('index')));
       if (busytd[i][n][0] === currentLabelTr && busytd[i][n][1] === currentLabelTd) {
-        return true;
+        if (!allow_self && parseInt(i) !== parseInt(currentLabel.data('index'))) {
+          return true;
+        }
       }
     }
   }
@@ -59,7 +66,7 @@ check_collision = function(currentLabelTr, currentLabelTd) {
 $('#schedule tbody').on('mousedown', 'td', function(e) {
   var td_level, tr_level;
   if (e.which === 1) {
-    currentLabel = $('<div class="label label-primary label-td">&nbsp;</div>');
+    currentLabel = $('<div class="label label-primary label-td"><span class="text">&nbsp;</span></div>');
     td_level = $(this).index();
     tr_level = $(this).closest('tr').index();
     if (!check_collision(tr_level, td_level)) {
@@ -195,7 +202,7 @@ level_index = function() {
 edit_label = function() {
   $('#schedule_form').modal('show');
   $('#schedule_form').addClass('edit');
-  $('#schedule_form #input-name').val(currentLabel.text());
+  $('#schedule_form #input-name').val(currentLabel.children('.text').text());
   $('#input-earlyin').prop('checked', currentLabel.hasClass('earlyin'));
   return $('#input-laterout').prop('checked', currentLabel.hasClass('laterout'));
 };
@@ -209,14 +216,14 @@ create_label = function() {
 };
 
 $('#input-earlyin').click(function() {
-  if (check_collision(currentLabel.closest('tr').index(), first_index())) {
+  if (check_collision(currentLabel.closest('tr').index(), first_index(), 1)) {
     alert('Ранний заезд невозможен!');
     return $(this).prop('checked', false);
   }
 });
 
 $('#input-laterout').click(function() {
-  if (check_collision(currentLabel.closest('tr').index(), last_index())) {
+  if (check_collision(currentLabel.closest('tr').index(), last_index(), 1)) {
     alert('Поздний выезд невозможен!');
     return $(this).prop('checked', false);
   }
@@ -245,7 +252,7 @@ $('#schedule thead').on('mouseout', 'th', function(e) {
 
 $('#schedule_form form').submit(function() {
   $('#schedule_form').modal('hide');
-  currentLabel.text($(this).find('#input-name').val());
+  currentLabel.children('.text').text($(this).find('#input-name').val());
   currentLabel.attr('class', 'label label-primary label-td');
   currentLabel.addClass('label-td-' + $(this).find('#input-status').val());
   if ($('#input-earlyin').prop('checked')) {

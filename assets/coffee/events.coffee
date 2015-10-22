@@ -21,14 +21,24 @@ currentDay = (Math.floor((currentDate.getTime()-currentYear.getTime())/1000/60/6
 monthMouseLeft = -currentDay*35
 $('#schedule').css('left', monthMouseLeft)
 
-check_collision = (currentLabelTr, currentLabelTd) ->
+# allow_self
+# Если да, то не будет проверять сталкивается ли сам собой
+# По умолчнию false
+check_collision = (currentLabelTr, currentLabelTd, allow_self) ->
+	if allow_self
+		allow_self = true
+	else
+		allow_self = false
+
 	for i of busytd
 		for n of busytd[i]
 			console.info busytd[i][n][0], currentLabelTr
 			console.log busytd[i][n][1], currentLabelTd
 			console.log parseInt(i), parseInt(currentLabel.data('index'))
-			if busytd[i][n][0] == currentLabelTr && busytd[i][n][1] == currentLabelTd# && parseInt(i) != parseInt(currentLabel.data('index'))
-				return true
+
+			if busytd[i][n][0] == currentLabelTr && busytd[i][n][1] == currentLabelTd
+				if !allow_self && parseInt(i) != parseInt(currentLabel.data('index'))
+					return true
 	return false
 
 ###delete_poisition = ->
@@ -40,7 +50,7 @@ check_collision = (currentLabelTr, currentLabelTd) ->
 $('#schedule tbody').on 'mousedown', 'td', (e) -> 
 	# console.info 'newinit'
 	if e.which == 1
-		currentLabel = $('<div class="label label-primary label-td">&nbsp;</div>')
+		currentLabel = $('<div class="label label-primary label-td"><span class="text">&nbsp;</span></div>')
 		td_level = $(this).index()
 		tr_level = $(this).closest('tr').index()
 
@@ -212,7 +222,7 @@ level_index = ->
 edit_label = -> 
 	$('#schedule_form').modal 'show'
 	$('#schedule_form').addClass 'edit'
-	$('#schedule_form #input-name').val(currentLabel.text())
+	$('#schedule_form #input-name').val(currentLabel.children('.text').text())
 	$('#input-earlyin').prop 'checked', currentLabel.hasClass 'earlyin'
 	$('#input-laterout').prop 'checked', currentLabel.hasClass 'laterout'
 
@@ -225,12 +235,12 @@ create_label = ->
 
 
 $('#input-earlyin').click ->
-	if check_collision(currentLabel.closest('tr').index(), first_index())
+	if check_collision(currentLabel.closest('tr').index(), first_index(), 1)
 		alert 'Ранний заезд невозможен!'
 		$(this).prop 'checked', false
 
 $('#input-laterout').click ->
-	if check_collision(currentLabel.closest('tr').index(), last_index())
+	if check_collision(currentLabel.closest('tr').index(), last_index(), 1)
 		alert 'Поздний выезд невозможен!'
 		$(this).prop 'checked', false
 
@@ -257,7 +267,7 @@ $('#schedule thead').on 'mouseout', 'th', (e) ->
 $('#schedule_form form').submit ->
 
 	$('#schedule_form').modal 'hide'
-	currentLabel.text($(this).find('#input-name').val())
+	currentLabel.children('.text').text($(this).find('#input-name').val())
 	currentLabel.attr 'class', 'label label-primary label-td'
 	currentLabel.addClass 'label-td-'+$(this).find('#input-status').val()
 

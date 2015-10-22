@@ -90,8 +90,6 @@ table.variants
 	min-width 100%
 	margin 6px 0
 	border 1px solid #fff
-	overflow hidden
-	text-overflow ellipsis	
 	&.earlyin
 		border-top-left-radius 0
 		border-bottom-left-radius 0
@@ -118,6 +116,10 @@ table.variants
 			width (column_width/4)
 			border-top-right-radius 5px
 			border-bottom-right-radius 5px
+	> span
+		overflow hidden
+		text-overflow ellipsis
+		display block
 	
 .label-td
 	border-radius 5px

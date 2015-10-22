@@ -115,9 +115,6 @@ table.variants td {
   min-width: 100%;
   margin: 6px 0;
   border: 1px solid #fff;
-  overflow: hidden;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
 }
 #schedule .label-td.earlyin {
   border-top-left-radius: 0;
@@ -146,6 +143,12 @@ table.variants td {
   width: 15px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+}
+#schedule .label-td > span {
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  display: block;
 }
 .label-td {
   -webkit-border-radius: 5px;
