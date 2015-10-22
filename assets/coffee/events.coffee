@@ -70,7 +70,7 @@ $('#schedule tbody').on 'mousedown', 'td', (e) ->
 			return false
 
 
-		if !check_collision(tr_level, td_level)
+		if !check_collision(tr_level, td_level, 1)
 			mouseIsDown = true
 			mouseElStart = $(this)
 
@@ -179,6 +179,23 @@ $('#schedule tbody').on 'mousemove', 'td', (e) ->
 			# console.info isCollision
 			# if isCollision
 			# 	console.log 'aaa'
+
+			tr_level = currentLabel.closest('tr').index()
+
+			len = Math.floor(parseInt(currentLabel[0].style.width)/100)
+			i = 0
+			isCollision = false
+			while i<len
+				i++
+				if check_collision(tr_level, first_index()+i, 1)
+					isCollision = true
+					
+			if $(this).index() < first_index()+len
+				isCollision = false
+
+
+			# console.warn check_collision(tr_level, td_level, 1)
+			# console.warn tr_level, td_level
 
 			if !isCollision
 				width = (mouseElCurrent.index()-mouseElStart.index())*100

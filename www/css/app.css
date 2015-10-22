@@ -100,10 +100,9 @@ table.variants td {
   position: absolute;
   right: 0;
   width: 1px;
-  top: 6px;
-  bottom: 6px;
+  top: 2px;
+  bottom: 1px;
   background-color: #a7bcc6;
-  z-index: 200;
 }
 #schedule .label-td {
   position: absolute;
@@ -153,7 +152,7 @@ table.variants td {
 .label-td {
   -webkit-border-radius: 5px;
   border-radius: 5px;
-  line-height: 16px;
+  line-height: 20px;
   text-align: left;
 }
 .label-td-green {
@@ -226,4 +225,7 @@ table.variants td {
 .tooltipList .icon-agent {
   background: url("../img/by_agent.png") left center no-repeat;
   padding-left: 20px;
+}
+.today {
+  background: #fff7ef;
 }

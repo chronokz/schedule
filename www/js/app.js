@@ -1,3 +1,17 @@
+var api;
+
+api = {};
+
+api.create = function() {};
+
+api.edit = function() {};
+
+api.update = function() {};
+
+api.remove = function() {};
+
+api.move = function() {};
+
 var busytd, check_collision, create_label, currentDate, currentDay, currentLabel, currentYear, dbl, edit_label, first_index, labelDrag, labelIndex, labelTdLevel, labelTrLevel, last_index, level_index, monthMouse, monthMouseLeft, mouseElCurrent, mouseElFinish, mouseElStart, mouseIsDown;
 
 mouseIsDown = false;
@@ -80,7 +94,7 @@ $('#schedule tbody').on('mousedown', 'td', function(e) {
       alert('В этом дне выезд будет позже');
       return false;
     }
-    if (!check_collision(tr_level, td_level)) {
+    if (!check_collision(tr_level, td_level, 1)) {
       mouseIsDown = true;
       mouseElStart = $(this);
       currentLabel = $('<div class="label label-primary label-td"><span class="text">&nbsp;</span></div>');
@@ -163,6 +177,19 @@ $('#schedule tbody').on('mousemove', 'td', function(e) {
     } else {
       mouseElCurrent = $(this);
       isCollision = false;
+      tr_level = currentLabel.closest('tr').index();
+      len = Math.floor(parseInt(currentLabel[0].style.width) / 100);
+      i = 0;
+      isCollision = false;
+      while (i < len) {
+        i++;
+        if (check_collision(tr_level, first_index() + i, 1)) {
+          isCollision = true;
+        }
+      }
+      if ($(this).index() < first_index() + len) {
+        isCollision = false;
+      }
       if (!isCollision) {
         width = (mouseElCurrent.index() - mouseElStart.index()) * 100;
         return currentLabel.css('width', width + '%');
@@ -354,4 +381,4 @@ while (m < 12) {
   }
 }
 
-$('#schedule tbody td[data-day="' + currentDate.getDate() + '"][data-month="' + (currentDate.getMonth() + 1) + '"]').css('background', '#f69c55');
+$('#schedule tbody td[data-day="' + currentDate.getDate() + '"][data-month="' + (currentDate.getMonth() + 1) + '"]').addClass('today');

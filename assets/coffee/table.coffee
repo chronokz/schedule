@@ -48,4 +48,4 @@ while m < 12
 		$('#schedule tbody tr').append('<td data-day="'+d+'" data-month="'+m+'"></td>')
 
 
-$('#schedule tbody td[data-day="'+currentDate.getDate()+'"][data-month="'+(currentDate.getMonth()+1)+'"]').css('background', '#f69c55')
+$('#schedule tbody td[data-day="'+currentDate.getDate()+'"][data-month="'+(currentDate.getMonth()+1)+'"]').addClass('today')
