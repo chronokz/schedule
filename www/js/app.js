@@ -65,14 +65,25 @@ check_collision = function(currentLabelTr, currentLabelTd, allow_self) {
  */
 
 $('#schedule tbody').on('mousedown', 'td', function(e) {
-  var td_level, tr_level;
+  var check_laterout, td_level, tr_level;
   if (e.which === 1) {
-    currentLabel = $('<div class="label label-primary label-td"><span class="text">&nbsp;</span></div>');
-    td_level = $(this).index();
     tr_level = $(this).closest('tr').index();
+    td_level = $(this).index();
+    check_laterout = false;
+    $('#schedule tbody tr:eq(' + tr_level + ') .label-td.laterout').each(function() {
+      currentLabel = $(this);
+      if (check_collision(tr_level, td_level - 1, 1)) {
+        return check_laterout = true;
+      }
+    });
+    if (check_laterout) {
+      alert('В этом дне выезд будет позже');
+      return false;
+    }
     if (!check_collision(tr_level, td_level)) {
       mouseIsDown = true;
       mouseElStart = $(this);
+      currentLabel = $('<div class="label label-primary label-td"><span class="text">&nbsp;</span></div>');
       $(this).append(currentLabel);
       return currentLabel.css('left', '50%');
     } else {
@@ -243,11 +254,11 @@ $('#schedule thead').mousemove(function(e) {
   }
 });
 
-$('#schedule thead').on('mouseup', 'th', function(e) {
+$('#schedule').on('mouseup', 'thead', function() {
   return monthMouse = 0;
 });
 
-$('#schedule thead').on('mouseout', 'th', function(e) {
+$('#schedule').on('mouseleave', 'thead', function() {
   return monthMouse = 0;
 });
 

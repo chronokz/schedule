@@ -55,14 +55,26 @@ check_collision = (currentLabelTr, currentLabelTd, allow_self) ->
 $('#schedule tbody').on 'mousedown', 'td', (e) -> 
 	# console.info 'newinit'
 	if e.which == 1
-		currentLabel = $('<div class="label label-primary label-td"><span class="text">&nbsp;</span></div>')
-		td_level = $(this).index()
+
 		tr_level = $(this).closest('tr').index()
+		td_level = $(this).index()
+
+		check_laterout = false
+		$('#schedule tbody tr:eq('+tr_level+') .label-td.laterout').each ->
+			currentLabel = $(this)
+			if check_collision(tr_level, td_level-1, 1)
+				check_laterout = true
+
+		if check_laterout
+			alert 'В этом дне выезд будет позже'
+			return false
+
 
 		if !check_collision(tr_level, td_level)
 			mouseIsDown = true
 			mouseElStart = $(this)
 
+			currentLabel = $('<div class="label label-primary label-td"><span class="text">&nbsp;</span></div>')
 			$(this).append(currentLabel)
 
 			currentLabel.css('left', '50%')
@@ -262,10 +274,10 @@ $('#schedule thead').mousemove (e) ->
 			'left': e.pageX - monthMouse + monthMouseLeft
 
 
-$('#schedule thead').on 'mouseup', 'th', (e) ->
+$('#schedule').on 'mouseup', 'thead', ->
 	monthMouse = 0
 
-$('#schedule thead').on 'mouseout', 'th', (e) ->
+$('#schedule').on 'mouseleave', 'thead', ->
 	monthMouse = 0
 
 
