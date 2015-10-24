@@ -2,19 +2,54 @@ var api;
 
 api = {};
 
-api.create = function(x, y, w) {
-  return alert('create');
+api.create = function(y, day, month, w, data) {
+  var currentLabel, earlyin, i, laterout, ref, ref1;
+  earlyin = (ref = data.earlyin) != null ? ref : {
+    'earlyin': ''
+  };
+  laterout = (ref1 = data.laterout) != null ? ref1 : {
+    'laterout': ''
+  };
+  currentLabel = $('<div class="label label-primary label-td ' + laterout + ' ' + earlyin + '"><span class="text">' + data.name + '</span></div>');
+  currentLabel.addClass('label-td-' + data.status);
+  $('#schedule tbody tr:eq(' + y + ') td[data-day="' + day + '"][data-month="' + month + '"]').append(currentLabel);
+  currentLabel.css('left', '50%');
+  currentLabel.css('width', w * 100 + '%');
+  currentLabel.css('z-index', 100);
+  currentLabel.attr('data-index', labelIndex);
+  create_label();
+  busytd[labelIndex] = [];
+  i = first_index();
+  while (i < last_index()) {
+    busytd[labelIndex].push([y, i]);
+    i++;
+  }
+  labelIndex++;
+  return currentLabel;
 };
 
 api.edit = function(id) {
   var currentLabel;
   currentLabel = $('.label-td[data-index=' + id + ']');
-  edit_label();
-  return currentLabel;
+  return edit_label();
 };
 
-api.update = function() {
-  return alert('update');
+api.update = function(id, data) {
+  var currentLabel;
+  currentLabel = $('.label-td[data-index=' + id + ']');
+  currentLabel.children('.text').text($(this).find('#input-name').val());
+  currentLabel.attr('class', 'label label-primary label-td');
+  currentLabel.addClass('label-td-' + status);
+  if (data.earlyin) {
+    currentLabel.addClass('earlyin');
+  } else {
+    currentLabel.removeClass('earlyin');
+  }
+  if (data.laterout) {
+    return currentLabel.addClass('laterout');
+  } else {
+    return currentLabel.removeClass('laterout');
+  }
 };
 
 api.remove = function(id) {
@@ -38,7 +73,7 @@ api.call_move = function() {
   return api.move(data);
 };
 
-var busytd, check_collision, create_label, currentDate, currentDay, currentLabel, currentYear, dbl, edit_label, first_index, labelDrag, labelIndex, labelTdLevel, labelTrLevel, label_width, last_index, level_index, monthMouse, monthMouseLeft, mouseElCurrent, mouseElFinish, mouseElStart, mouseIsDown;
+var busytd, check_collision, create_label, currentDate, currentDay, currentLabel, currentYear, dbl, edit_label, first_index, labelDrag, labelIndex, labelTdLevel, labelTrLevel, label_width, last_index, level_index, monthMouse, monthMouseLeft, mouseElCurrent, mouseElFinish, mouseElStart, mouseIsDown, statuses;
 
 mouseIsDown = false;
 
@@ -61,6 +96,8 @@ labelTdLevel = false;
 labelTrLevel = false;
 
 labelIndex = 0;
+
+statuses = ['green', 'blue', 'red', 'yellow'];
 
 busytd = [];
 
@@ -272,11 +309,21 @@ label_width = function() {
 };
 
 edit_label = function() {
+  var i, results;
   $('#schedule_form').modal('show');
   $('#schedule_form').addClass('edit');
   $('#schedule_form #input-name').val(currentLabel.children('.text').text());
   $('#input-earlyin').prop('checked', currentLabel.hasClass('earlyin'));
-  return $('#input-laterout').prop('checked', currentLabel.hasClass('laterout'));
+  $('#input-laterout').prop('checked', currentLabel.hasClass('laterout'));
+  i = 0;
+  results = [];
+  while (i < statuses.length) {
+    if (currentLabel.hasClass('label-td-' + statuses[i])) {
+      $('#input-status').val('label-td-' + statuses[i]);
+    }
+    results.push(i++);
+  }
+  return results;
 };
 
 create_label = function() {

@@ -9,6 +9,7 @@ labelDrag = false
 labelTdLevel = false
 labelTrLevel = false
 labelIndex = 0
+statuses = ['green', 'blue', 'red', 'yellow']
 # xMove = false
 
 # Busy
@@ -257,6 +258,11 @@ edit_label = ->
 	$('#schedule_form #input-name').val(currentLabel.children('.text').text())
 	$('#input-earlyin').prop 'checked', currentLabel.hasClass 'earlyin'
 	$('#input-laterout').prop 'checked', currentLabel.hasClass 'laterout'
+	i = 0
+	while i < statuses.length
+		if currentLabel.hasClass 'label-td-'+statuses[i]
+			$('#input-status').val('label-td-'+statuses[i])
+		i++
 
 create_label = ->
 	$('#schedule_form').modal 'show'
