@@ -110,9 +110,11 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 			i = first_index()
 			while i < last_index()
 				busytd[currentLabel.data('index')].push([tr_level, i])
-				console.warn tr_level, i
+				# console.warn tr_level, i
 				i++
 			labelDrag = false
+			api.call_move()
+
 		else if mouseIsDown
 			mouseElFinish = $(this)
 			if mouseElFinish && mouseElStart && currentLabel
@@ -245,6 +247,9 @@ last_index = ->
 
 level_index = ->
 	currentLabel.closest('tr').index()
+
+label_width = ->
+	parseInt(currentLabel[0].style.width)/100
 
 edit_label = -> 
 	$('#schedule_form').modal 'show'

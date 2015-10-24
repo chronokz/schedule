@@ -2,27 +2,43 @@ var api;
 
 api = {};
 
-api.create = function() {
+api.create = function(x, y, w) {
   return alert('create');
 };
 
-api.edit = function() {
-  return alert('edit');
+api.edit = function(id) {
+  var currentLabel;
+  currentLabel = $('.label-td[data-index=' + id + ']');
+  edit_label();
+  return currentLabel;
 };
 
 api.update = function() {
   return alert('update');
 };
 
-api.remove = function() {
-  return alert('remove');
+api.remove = function(id) {
+  var currentLabel;
+  currentLabel = $('.label-td[data-index=' + id + ']');
+  currentLabel.remove();
+  return busytd[currentLabel.data('index')] = [];
 };
 
-api.move = function() {
-  return alert('move');
+api.move = function(data) {
+  return console.log('Demo:', data);
 };
 
-var busytd, check_collision, create_label, currentDate, currentDay, currentLabel, currentYear, dbl, edit_label, first_index, labelDrag, labelIndex, labelTdLevel, labelTrLevel, last_index, level_index, monthMouse, monthMouseLeft, mouseElCurrent, mouseElFinish, mouseElStart, mouseIsDown;
+api.call_move = function() {
+  var data;
+  data = {
+    id: currentLabel.data('index'),
+    y: level_index(),
+    x: first_index()
+  };
+  return api.move(data);
+};
+
+var busytd, check_collision, create_label, currentDate, currentDay, currentLabel, currentYear, dbl, edit_label, first_index, labelDrag, labelIndex, labelTdLevel, labelTrLevel, label_width, last_index, level_index, monthMouse, monthMouseLeft, mouseElCurrent, mouseElFinish, mouseElStart, mouseIsDown;
 
 mouseIsDown = false;
 
@@ -139,10 +155,10 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
       i = first_index();
       while (i < last_index()) {
         busytd[currentLabel.data('index')].push([tr_level, i]);
-        console.warn(tr_level, i);
         i++;
       }
       labelDrag = false;
+      api.call_move();
     } else if (mouseIsDown) {
       mouseElFinish = $(this);
       if (mouseElFinish && mouseElStart && currentLabel) {
@@ -249,6 +265,10 @@ last_index = function() {
 
 level_index = function() {
   return currentLabel.closest('tr').index();
+};
+
+label_width = function() {
+  return parseInt(currentLabel[0].style.width) / 100;
 };
 
 edit_label = function() {
