@@ -2,15 +2,25 @@ var api;
 
 api = {};
 
-api.create = function() {};
+api.create = function() {
+  return alert('create');
+};
 
-api.edit = function() {};
+api.edit = function() {
+  return alert('edit');
+};
 
-api.update = function() {};
+api.update = function() {
+  return alert('update');
+};
 
-api.remove = function() {};
+api.remove = function() {
+  return alert('remove');
+};
 
-api.move = function() {};
+api.move = function() {
+  return alert('move');
+};
 
 var busytd, check_collision, create_label, currentDate, currentDay, currentLabel, currentYear, dbl, edit_label, first_index, labelDrag, labelIndex, labelTdLevel, labelTrLevel, last_index, level_index, monthMouse, monthMouseLeft, mouseElCurrent, mouseElFinish, mouseElStart, mouseIsDown;
 
@@ -126,9 +136,10 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
       				currentLabel.appendTo($('#schedule tbody tr:eq('+tr_level+') td:eq('+td_level+')'))
        */
       busytd[currentLabel.data('index')] = [];
-      i = mouseElStart.index();
-      while (i < mouseElFinish.index()) {
+      i = first_index();
+      while (i < last_index()) {
         busytd[currentLabel.data('index')].push([tr_level, i]);
+        console.warn(tr_level, i);
         i++;
       }
       labelDrag = false;

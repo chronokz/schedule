@@ -70,6 +70,7 @@ $('#schedule tbody').on 'mousedown', 'td', (e) ->
 			return false
 
 
+		# console.warn tr_level, td_level
 		if !check_collision(tr_level, td_level, 1)
 			mouseIsDown = true
 			mouseElStart = $(this)
@@ -106,9 +107,10 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 
 			###
 			busytd[currentLabel.data('index')] = []
-			i = mouseElStart.index()
-			while i < mouseElFinish.index()
+			i = first_index()
+			while i < last_index()
 				busytd[currentLabel.data('index')].push([tr_level, i])
+				console.warn tr_level, i
 				i++
 			labelDrag = false
 		else if mouseIsDown
