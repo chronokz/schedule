@@ -3,7 +3,7 @@ var api;
 api = {};
 
 api.create = function(y, day, month, w, data) {
-  var currentLabel, earlyin, i, laterout, ref, ref1;
+  var currentLabel, earlyin, i, laterout, parent_td, ref, ref1;
   earlyin = (ref = data.earlyin) != null ? ref : {
     'earlyin': ''
   };
@@ -12,15 +12,16 @@ api.create = function(y, day, month, w, data) {
   };
   currentLabel = $('<div class="label label-primary label-td ' + laterout + ' ' + earlyin + '"><span class="text">' + data.name + '</span></div>');
   currentLabel.addClass('label-td-' + data.status);
-  $('#schedule tbody tr:eq(' + y + ') td[data-day="' + day + '"][data-month="' + month + '"]').append(currentLabel);
+  parent_td = $('#schedule tbody tr:eq(' + y + ') td[data-day="' + day + '"][data-month="' + month + '"]');
+  parent_td.append(currentLabel);
   currentLabel.css('left', '50%');
   currentLabel.css('width', w * 100 + '%');
   currentLabel.css('z-index', 100);
   currentLabel.attr('data-index', labelIndex);
   create_label();
   busytd[labelIndex] = [];
-  i = first_index();
-  while (i < last_index()) {
+  i = parent_td.index();
+  while (i < parent_td.index() + w) {
     busytd[labelIndex].push([y, i]);
     i++;
   }
