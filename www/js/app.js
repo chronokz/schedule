@@ -202,7 +202,7 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
         i++;
       }
       labelDrag = false;
-      if (mouseElStart.closest('tr').index() !== tr_level) {
+      if (mouseElStart && mouseElStart.closest('tr').index() !== tr_level) {
         api.call_move();
       }
     } else if (mouseIsDown) {
