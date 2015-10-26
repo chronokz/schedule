@@ -34,6 +34,10 @@ api.edit = function(id) {
   return edit_label();
 };
 
+api.call_edit = function(id) {
+  return console.log('Demo:', id);
+};
+
 api.update = function(id, data) {
   var currentLabel;
   currentLabel = $('.label-td[data-index=' + id + ']');
@@ -312,6 +316,7 @@ label_width = function() {
 
 edit_label = function() {
   var i, results;
+  api.call_edit(currentLabel.data('index'));
   $('#schedule_form').modal('show');
   $('#schedule_form').addClass('edit');
   $('#schedule_form #input-name').val(currentLabel.children('.text').text());
