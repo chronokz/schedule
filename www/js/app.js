@@ -298,7 +298,6 @@ $('#schedule tbody').on('mousedown', '.label-td', function(e) {
 $('#schedule tbody').on('dblclick', '.label-td', function(e) {
   if (e.which === 1) {
     currentLabel = $(this);
-    api.call_edit(currentLabel.data('index'));
     return mouseIsDown = false;
   }
 });

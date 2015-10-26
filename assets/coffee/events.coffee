@@ -241,7 +241,7 @@ $('#schedule tbody').on 'mousedown', '.label-td', (e) ->
 $('#schedule tbody').on 'dblclick', '.label-td', (e) ->
 	if e.which == 1
 		currentLabel = $(this)
-		api.call_edit(currentLabel.data('index'))
+		# api.call_edit(currentLabel.data('index'))
 		mouseIsDown = false
 
 first_index = ->
