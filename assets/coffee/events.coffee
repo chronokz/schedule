@@ -255,6 +255,7 @@ label_width = ->
 	parseInt(currentLabel[0].style.width)/100
 
 edit_label = -> 
+	api.call_edit(currentLabel.data('index'))
 	$('#schedule_form').modal 'show'
 	$('#schedule_form').addClass 'edit'
 	$('#schedule_form #input-name').val(currentLabel.children('.text').text())

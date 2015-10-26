@@ -34,6 +34,10 @@ api.edit = (id) ->
 	currentLabel = $('.label-td[data-index='+id+']')
 	edit_label()
 
+# Получить вызов брони по вызову редактирования
+api.call_edit = (id) ->
+	console.log 'Demo:', id
+
 # Сохранение брони
 # id - id брони, хранится в аттрибуте data-index
 # data.name - имя
