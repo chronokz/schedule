@@ -282,8 +282,7 @@ $('#schedule tbody').on('mousedown', '.label-td', function(e) {
   dbl++;
   e.stopPropagation();
   if (dbl > 1) {
-    dbl = 0;
-    return edit_label();
+    return dbl = 0;
   } else {
     labelDrag = true;
     if (e.which === 1) {

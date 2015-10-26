@@ -229,7 +229,7 @@ $('#schedule tbody').on 'mousedown', '.label-td', (e) ->
 	e.stopPropagation()
 	if dbl > 1
 		dbl = 0
-		edit_label()
+		# edit_label()
 	else
 		labelDrag = true
 		if e.which == 1
