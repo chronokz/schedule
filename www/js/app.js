@@ -2,8 +2,11 @@ var api;
 
 api = {};
 
-api.create = function(y, day, month, w, data) {
-  var currentLabel, earlyin, i, laterout, parent_td, ref, ref1;
+api.create = function(id, y, day, month, w, data) {
+  var currentLabel, earlyin, i, labelIndex, laterout, parent_td, ref, ref1;
+  if (id) {
+    labelIndex = id;
+  }
   earlyin = (ref = data.earlyin) != null ? ref : {
     'earlyin': ''
   };

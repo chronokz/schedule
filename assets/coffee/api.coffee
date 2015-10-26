@@ -1,6 +1,7 @@
 api = {}
 
 # Создать бронь
+# id - желаемый id брони, если указывать (0/false/null) то будет задаваться автоматически
 # y - линия куда будет установлена бронь
 # day - день месяца куда будет установлена бронь (Формат: d)
 # month - месяц где будет начинатся бронь (Формат: m)
@@ -10,7 +11,9 @@ api = {}
 # data.earlyin - ранний заезд (формат 1/0)
 # data.laterout - поздний выезд (формат 1/0)
 # data.status - статус брони (на данный момент есть следующие css-классы 'green', 'blue', 'red', 'yellow')
-api.create = (y, day, month, w, data) ->
+api.create = (id, y, day, month, w, data) ->
+	if (id)
+		labelIndex = id
 	earlyin = (data.earlyin) ? 'earlyin' : ''
 	laterout = (data.laterout) ? 'laterout' : ''
 	currentLabel = $('<div class="label label-primary label-td '+laterout+' '+earlyin+'"><span class="text">'+data.name+'</span></div>')
