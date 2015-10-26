@@ -379,58 +379,54 @@ $('#schedule').on('mouseleave', 'thead', function() {
   return monthMouse = 0;
 });
 
-$('#schedule_form form').submit(function() {
-  $('#schedule_form').modal('hide');
-  currentLabel.children('.text').text($(this).find('#input-name').val());
-  currentLabel.attr('class', 'label label-primary label-td');
-  currentLabel.addClass('label-td-' + $(this).find('#input-status').val());
-  if ($('#input-earlyin').prop('checked')) {
-    currentLabel.addClass('earlyin');
-  } else {
-    currentLabel.removeClass('earlyin');
-  }
-  if ($('#input-laterout').prop('checked')) {
-    currentLabel.addClass('laterout');
-  } else {
-    currentLabel.removeClass('laterout');
-  }
-  $('#schedule_form').removeClass('create').removeClass('edit');
-  return false;
-});
 
-$('#schedule_form form .action_cancel').click(function() {
-  $('#schedule_form').modal('hide');
-  if ($('#schedule_form').hasClass('create')) {
-    currentLabel.remove();
-    busytd[currentLabel.data('index')] = [];
-  }
-  return $('#schedule_form').removeClass('create').removeClass('edit');
-});
+/*$('#schedule_form form').submit ->
 
-$('#schedule_form form .action_remove').click(function() {
-  $('#schedule_form').modal('hide');
-  $('#schedule_form').removeClass('create').removeClass('edit');
-  currentLabel.remove();
-  return busytd[currentLabel.data('index')] = [];
-});
+	$('#schedule_form').modal 'hide'
+	currentLabel.children('.text').text($(this).find('#input-name').val())
+	currentLabel.attr 'class', 'label label-primary label-td'
+	currentLabel.addClass 'label-td-'+$(this).find('#input-status').val()
 
-$('#schedule_form').click(function() {
-  $('#schedule_form').modal('hide');
-  if ($('#schedule_form').hasClass('create')) {
-    currentLabel.remove();
-    busytd[currentLabel.data('index')] = [];
-  }
-  return $('#schedule_form').removeClass('create').removeClass('edit');
-});
+	if $('#input-earlyin').prop('checked')
+		currentLabel.addClass 'earlyin'
+	else
+		currentLabel.removeClass 'earlyin'
+
+	if $('#input-laterout').prop('checked')
+		currentLabel.addClass 'laterout'
+	else
+		currentLabel.removeClass 'laterout'
+
+	$('#schedule_form').removeClass('create').removeClass('edit')
+	return false
+
+$('#schedule_form form .action_cancel').click ->
+	$('#schedule_form').modal 'hide'
+	if $('#schedule_form').hasClass 'create'
+		currentLabel.remove()
+		busytd[currentLabel.data('index')] = []
+	$('#schedule_form').removeClass('create').removeClass('edit')
+
+$('#schedule_form form .action_remove').click ->
+	$('#schedule_form').modal 'hide'
+	$('#schedule_form').removeClass('create').removeClass('edit')
+	currentLabel.remove()
+	busytd[currentLabel.data('index')] = []
+
+$('#schedule_form').click ->
+	$('#schedule_form').modal 'hide'
+	if $('#schedule_form').hasClass 'create'
+		currentLabel.remove()
+		busytd[currentLabel.data('index')] = []
+	$('#schedule_form').removeClass('create').removeClass('edit')
+
+$(document).keyup (e) ->
+	if e.keyCode == 27
+		$('#schedule_form .action_cancel').click()
+ */
 
 $('#schedule_form .modal-dialog').click(function(e) {
   return e.stopPropagation();
-});
-
-$(document).keyup(function(e) {
-  if (e.keyCode === 27) {
-    return $('#schedule_form .action_cancel').click();
-  }
 });
 
 var d, date, dayInMonth, dayOfWeek, m, month, td, v, variants, weeks, y, yd;

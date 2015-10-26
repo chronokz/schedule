@@ -308,7 +308,7 @@ $('#schedule').on 'mouseleave', 'thead', ->
 
 
 # Form
-$('#schedule_form form').submit ->
+###$('#schedule_form form').submit ->
 
 	$('#schedule_form').modal 'hide'
 	currentLabel.children('.text').text($(this).find('#input-name').val())
@@ -348,9 +348,10 @@ $('#schedule_form').click ->
 		busytd[currentLabel.data('index')] = []
 	$('#schedule_form').removeClass('create').removeClass('edit')
 
-$('#schedule_form .modal-dialog').click (e) ->
-	e.stopPropagation();
-
 $(document).keyup (e) ->
 	if e.keyCode == 27
 		$('#schedule_form .action_cancel').click()
+###
+
+$('#schedule_form .modal-dialog').click (e) ->
+	e.stopPropagation();
