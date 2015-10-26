@@ -21,7 +21,6 @@ api.create = (y, day, month, w, data) ->
 	currentLabel.css('width', w*100+'%')
 	currentLabel.css('z-index', 100)
 	currentLabel.attr('data-index', labelIndex)
-	# create_label()
 	busytd[labelIndex] = []
 	i = parent_td.index()
 	while i < parent_td.index()+w
