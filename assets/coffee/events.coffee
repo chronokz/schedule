@@ -230,6 +230,7 @@ $('#schedule tbody').on 'mousedown', '.label-td', (e) ->
 	if dbl > 1
 		dbl = 0
 		api.call_edit(currentLabel.data('index'))
+		mouseIsDown = false
 	else
 		labelDrag = true
 		if e.which == 1
@@ -241,6 +242,7 @@ $('#schedule tbody').on 'dblclick', '.label-td', (e) ->
 	if e.which == 1
 		currentLabel = $(this)
 		api.call_edit(currentLabel.data('index'))
+		mouseIsDown = false
 
 first_index = ->
 	currentLabel.parent().index()

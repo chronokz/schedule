@@ -283,7 +283,8 @@ $('#schedule tbody').on('mousedown', '.label-td', function(e) {
   e.stopPropagation();
   if (dbl > 1) {
     dbl = 0;
-    return api.call_edit(currentLabel.data('index'));
+    api.call_edit(currentLabel.data('index'));
+    return mouseIsDown = false;
   } else {
     labelDrag = true;
     if (e.which === 1) {
@@ -297,7 +298,8 @@ $('#schedule tbody').on('mousedown', '.label-td', function(e) {
 $('#schedule tbody').on('dblclick', '.label-td', function(e) {
   if (e.which === 1) {
     currentLabel = $(this);
-    return api.call_edit(currentLabel.data('index'));
+    api.call_edit(currentLabel.data('index'));
+    return mouseIsDown = false;
   }
 });
 
