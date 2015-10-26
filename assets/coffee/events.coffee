@@ -229,7 +229,7 @@ $('#schedule tbody').on 'mousedown', '.label-td', (e) ->
 	e.stopPropagation()
 	if dbl > 1
 		dbl = 0
-		# edit_label()
+		api.call_edit(currentLabel.data('index'))
 	else
 		labelDrag = true
 		if e.which == 1
@@ -240,7 +240,7 @@ $('#schedule tbody').on 'mousedown', '.label-td', (e) ->
 $('#schedule tbody').on 'dblclick', '.label-td', (e) ->
 	if e.which == 1
 		currentLabel = $(this)
-		edit_label()
+		api.call_edit(currentLabel.data('index'))
 
 first_index = ->
 	currentLabel.parent().index()
@@ -255,7 +255,6 @@ label_width = ->
 	parseInt(currentLabel[0].style.width)/100
 
 edit_label = -> 
-	api.call_edit(currentLabel.data('index'))
 	$('#schedule_form').modal 'show'
 	$('#schedule_form').addClass 'edit'
 	$('#schedule_form #input-name').val(currentLabel.children('.text').text())

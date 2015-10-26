@@ -282,7 +282,8 @@ $('#schedule tbody').on('mousedown', '.label-td', function(e) {
   dbl++;
   e.stopPropagation();
   if (dbl > 1) {
-    return dbl = 0;
+    dbl = 0;
+    return api.call_edit(currentLabel.data('index'));
   } else {
     labelDrag = true;
     if (e.which === 1) {
@@ -296,7 +297,7 @@ $('#schedule tbody').on('mousedown', '.label-td', function(e) {
 $('#schedule tbody').on('dblclick', '.label-td', function(e) {
   if (e.which === 1) {
     currentLabel = $(this);
-    return edit_label();
+    return api.call_edit(currentLabel.data('index'));
   }
 });
 
@@ -318,7 +319,6 @@ label_width = function() {
 
 edit_label = function() {
   var i, results;
-  api.call_edit(currentLabel.data('index'));
   $('#schedule_form').modal('show');
   $('#schedule_form').addClass('edit');
   $('#schedule_form #input-name').val(currentLabel.children('.text').text());
