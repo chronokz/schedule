@@ -164,6 +164,7 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 				checkout = mouseElFinish.data('day')+'.'+zerofill(mouseElFinish.data('month'))+'.'+mouseElFinish.data('year')
 
 				api.call_create(tr_level, checkin, checkout)
+				currentLabel.remove()
 		mouseIsDown = false
 
 $('#schedule tbody').on 'mousemove', 'td', (e) ->

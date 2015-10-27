@@ -60,7 +60,6 @@ api.update = function(id, data) {
 };
 
 api.call_create = function(y, checkin, checkout) {
-  currentLabel.remove();
   return console.log('Demo:', y, checkin, checkout);
 };
 
@@ -237,6 +236,7 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
         checkin = mouseElStart.data('day') + '.' + zerofill(mouseElStart.data('month')) + '.' + mouseElStart.data('year');
         checkout = mouseElFinish.data('day') + '.' + zerofill(mouseElFinish.data('month')) + '.' + mouseElFinish.data('year');
         api.call_create(tr_level, checkin, checkout);
+        currentLabel.remove();
       }
     }
     return mouseIsDown = false;
