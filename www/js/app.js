@@ -44,7 +44,7 @@ api.call_edit = function(id) {
 api.update = function(id, data) {
   var currentLabel;
   currentLabel = $('.label-td[data-index=' + id + ']');
-  currentLabel.children('.text').text(data.status);
+  currentLabel.children('.text').text(data.name);
   currentLabel.attr('class', 'label label-primary label-td');
   currentLabel.addClass('label-td-' + data.status);
   if (data.earlyin) {
