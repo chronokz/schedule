@@ -63,6 +63,13 @@ api.update = (id, data) ->
 		currentLabel.addClass 'laterout'
 	else
 		currentLabel.removeClass 'laterout'
+
+# Получить вызов брони по вызову редактирования
+# y - линия куда будет установлена бронь
+# checkin - дата заезда
+# checkout - дата выезда
+api.call_create = (y, checkin, checkout) ->
+	console.log 'Demo:', y, checkin, checkout
 	
 
 # Удаление брони

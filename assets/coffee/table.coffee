@@ -45,7 +45,7 @@ while m < 12
 		yd++
 		dayOfWeek = new Date(y,m,d).getDay()
 		$('#schedule thead tr:last').append('<th>'+'<span class="dayOfWeek">'+weeks[dayOfWeek]+'</span> <span class="dayInMonth">'+d+'</span></th>')
-		$('#schedule tbody tr').append('<td data-day="'+d+'" data-month="'+m+'"></td>')
+		$('#schedule tbody tr').append('<td data-day="'+d+'" data-month="'+m+'" data-year="'+y+'"></td>')
 
 
 $('#schedule tbody td[data-day="'+currentDate.getDate()+'"][data-month="'+(currentDate.getMonth()+1)+'"]').addClass('today')

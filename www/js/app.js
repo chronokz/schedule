@@ -59,6 +59,10 @@ api.update = function(id, data) {
   }
 };
 
+api.call_create = function(y, checkin, checkout) {
+  return console.log('Demo:', y, checkin, checkout);
+};
+
 api.remove = function(id) {
   var currentLabel;
   currentLabel = $('.label-td[data-index=' + id + ']');
@@ -177,7 +181,7 @@ $('#schedule tbody').on('mousedown', 'td', function(e) {
 });
 
 $('#schedule tbody').on('mouseup', 'td', function(e) {
-  var i, td_level, tr_level;
+  var checkin, checkout, i, td_level, tr_level;
   if (e.which === 1) {
     if (labelDrag) {
       tr_level = level_index();
@@ -210,7 +214,6 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
       if (mouseElFinish && mouseElStart && currentLabel) {
         tr_level = level_index();
         currentLabel.css('z-index', 100);
-        create_label();
         busytd[labelIndex] = [];
         i = first_index();
         while (i < last_index()) {
@@ -219,6 +222,9 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
         }
         currentLabel.attr('data-index', labelIndex);
         labelIndex++;
+        checkin = mouseElStart.data('year') + '-' + mouseElStart.data('month') + '=' + mouseElStart.data('day');
+        checkout = mouseElFinish.data('year') + '-' + mouseElFinish.data('month') + '=' + mouseElFinish.data('day');
+        api.call_create(tr_level, checkin, checkout);
       }
     }
     return mouseIsDown = false;
@@ -463,7 +469,7 @@ while (m < 12) {
     yd++;
     dayOfWeek = new Date(y, m, d).getDay();
     $('#schedule thead tr:last').append('<th>' + '<span class="dayOfWeek">' + weeks[dayOfWeek] + '</span> <span class="dayInMonth">' + d + '</span></th>');
-    $('#schedule tbody tr').append('<td data-day="' + d + '" data-month="' + m + '"></td>');
+    $('#schedule tbody tr').append('<td data-day="' + d + '" data-month="' + m + '" data-year="' + y + '"></td>');
   }
 }
 
