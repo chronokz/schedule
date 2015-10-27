@@ -50,7 +50,7 @@ api.call_edit = (id) ->
 # data.status - статус брони (на данный момент есть следующие css-классы 'green', 'blue', 'red', 'yellow')
 api.update = (id, data) ->
 	currentLabel = $('.label-td[data-index='+id+']')
-	currentLabel.children('.text').text($(this).find('#input-name').val())
+	currentLabel.children('.text').text($('#schedule_form').find('#input-name').val())
 	currentLabel.attr 'class', 'label label-primary label-td'
 	currentLabel.addClass 'label-td-'+status
 

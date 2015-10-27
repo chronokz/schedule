@@ -44,7 +44,7 @@ api.call_edit = function(id) {
 api.update = function(id, data) {
   var currentLabel;
   currentLabel = $('.label-td[data-index=' + id + ']');
-  currentLabel.children('.text').text($(this).find('#input-name').val());
+  currentLabel.children('.text').text($('#schedule_form').find('#input-name').val());
   currentLabel.attr('class', 'label label-primary label-td');
   currentLabel.addClass('label-td-' + status);
   if (data.earlyin) {
