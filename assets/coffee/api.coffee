@@ -69,6 +69,7 @@ api.update = (id, data) ->
 # checkin - дата заезда
 # checkout - дата выезда
 api.call_create = (y, checkin, checkout) ->
+	currentLabel.remove()
 	console.log 'Demo:', y, checkin, checkout
 	
 

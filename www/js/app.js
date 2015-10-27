@@ -60,6 +60,7 @@ api.update = function(id, data) {
 };
 
 api.call_create = function(y, checkin, checkout) {
+  currentLabel.remove();
   return console.log('Demo:', y, checkin, checkout);
 };
 
