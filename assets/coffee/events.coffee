@@ -151,8 +151,8 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 				currentLabel.attr('data-index', labelIndex)
 				labelIndex++
 
-				checkin = mouseElStart.data('year')+'-'+mouseElStart.data('month')+'='+mouseElStart.data('day')
-				checkout = mouseElFinish.data('year')+'-'+mouseElFinish.data('month')+'='+mouseElFinish.data('day')
+				checkin = mouseElStart.data('year')+'-'+mouseElStart.data('month')+'-'+mouseElStart.data('day')
+				checkout = mouseElFinish.data('year')+'-'+mouseElFinish.data('month')+'-'+mouseElFinish.data('day')
 
 				api.call_create(tr_level, checkin, checkout)
 		mouseIsDown = false
