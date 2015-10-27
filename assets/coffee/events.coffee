@@ -22,6 +22,15 @@ currentDay = (Math.floor((currentDate.getTime()-currentYear.getTime())/1000/60/6
 monthMouseLeft = -currentDay*60
 $('#schedule').css('left', monthMouseLeft)
 
+
+zerofill = (num, length) ->
+	if length == undefined
+		length = 2
+	length -= num.toString().length
+	if length > 0
+		return new Array(length + (if /\./.test(num) then 2 else 1)).join('0') + num
+	num + ''
+
 # allow_self
 # Если да, то не будет проверять сталкивается ли сам собой
 # По умолчнию false
@@ -151,8 +160,8 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 				currentLabel.attr('data-index', labelIndex)
 				labelIndex++
 
-				checkin = mouseElStart.data('day')+'.'+mouseElStart.data('month')+'.'+mouseElStart.data('year')
-				checkout = mouseElFinish.data('day')+'.'+mouseElFinish.data('month')+'.'+mouseElFinish.data('year')
+				checkin = mouseElStart.data('day')+'.'+zerofill(mouseElStart.data('month'))+'.'+mouseElStart.data('year')
+				checkout = mouseElFinish.data('day')+'.'+zerofill(mouseElFinish.data('month'))+'.'+mouseElFinish.data('year')
 
 				api.call_create(tr_level, checkin, checkout)
 		mouseIsDown = false

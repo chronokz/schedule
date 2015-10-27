@@ -84,7 +84,7 @@ api.call_move = function() {
   return api.move(data);
 };
 
-var busytd, check_collision, create_label, currentDate, currentDay, currentLabel, currentYear, dbl, edit_label, first_index, labelDrag, labelIndex, labelTdLevel, labelTrLevel, label_width, last_index, level_index, monthMouse, monthMouseLeft, mouseElCurrent, mouseElFinish, mouseElStart, mouseIsDown, statuses;
+var busytd, check_collision, create_label, currentDate, currentDay, currentLabel, currentYear, dbl, edit_label, first_index, labelDrag, labelIndex, labelTdLevel, labelTrLevel, label_width, last_index, level_index, monthMouse, monthMouseLeft, mouseElCurrent, mouseElFinish, mouseElStart, mouseIsDown, statuses, zerofill;
 
 mouseIsDown = false;
 
@@ -121,6 +121,17 @@ currentDay = Math.floor((currentDate.getTime() - currentYear.getTime()) / 1000 /
 monthMouseLeft = -currentDay * 60;
 
 $('#schedule').css('left', monthMouseLeft);
+
+zerofill = function(num, length) {
+  if (length === void 0) {
+    length = 2;
+  }
+  length -= num.toString().length;
+  if (length > 0) {
+    return new Array(length + (/\./.test(num) ? 2 : 1)).join('0') + num;
+  }
+  return num + '';
+};
 
 check_collision = function(currentLabelTr, currentLabelTd, allow_self) {
   var i, n;
@@ -222,8 +233,8 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
         }
         currentLabel.attr('data-index', labelIndex);
         labelIndex++;
-        checkin = mouseElStart.data('day') + '.' + mouseElStart.data('month') + '.' + mouseElStart.data('year');
-        checkout = mouseElFinish.data('day') + '.' + mouseElFinish.data('month') + '.' + mouseElFinish.data('year');
+        checkin = mouseElStart.data('day') + '.' + zerofill(mouseElStart.data('month')) + '.' + mouseElStart.data('year');
+        checkout = mouseElFinish.data('day') + '.' + zerofill(mouseElFinish.data('month')) + '.' + mouseElFinish.data('year');
         api.call_create(tr_level, checkin, checkout);
       }
     }
