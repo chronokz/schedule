@@ -471,7 +471,7 @@ while (v < variants) {
 yd = 0;
 
 while (m < 12) {
-  dayInMonth = new Date(y, m, 0).getDate();
+  dayInMonth = new Date(y, m + 1, 0).getDate();
   td = $('<th colspan="' + dayInMonth + '">' + month[m] + '</th>');
   $('#schedule thead tr:first').append(td);
   d = 0;
