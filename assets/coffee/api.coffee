@@ -96,7 +96,7 @@ api.move = () ->
 
 # Вызов callback
 api.call_move = (id, y) ->
-	console.log 'Demo: {ID', id, ', Y:' y, '}'
+	console.log 'Demo: {ID'+id+', Y:'+y+'}'
 
 
 # Создать таблицу по запросу

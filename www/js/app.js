@@ -73,11 +73,11 @@ api.remove = function(id) {
 };
 
 api.move = function() {
-  return api.move(data.id, level_index());
+  return api.call_move(data.id, level_index());
 };
 
 api.call_move = function(id, y) {
-  return console.log('Demo:', id, y);
+  return console.log('Demo: {ID' + id + ', Y:' + y + '}');
 };
 
 api.generate = function(start, end, offset) {
