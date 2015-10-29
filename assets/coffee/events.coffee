@@ -125,7 +125,7 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 			labelDrag = false
 
 			if mouseElStart && mouseElStart.closest('tr').index() != tr_level
-				api.call_move()
+				api.move()
 
 		else if mouseIsDown
 			mouseElFinish = $(this)

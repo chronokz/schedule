@@ -91,16 +91,12 @@ api.remove = (id) ->
 # data.x (int) - конечная позиция брони в ячейке по x
 # data.y (int) - конечная позиция брони в ячейке по y
 # use: api.move = function(data){ console.log(data) }
-api.move = (data) ->
-	console.log 'Demo:', data
+api.move = () ->
+	api.move(data.id, level_index())
 
 # Вызов callback
-api.call_move = ->
-	data =
-		id: currentLabel.data('index')
-		y: level_index()
-		x: first_index()
-	api.move(data)
+api.call_move = (id, y) ->
+	console.log 'Demo: {ID:', id, ', Y:' y, '}'
 
 
 # Создать таблицу по запросу

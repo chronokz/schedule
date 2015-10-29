@@ -72,18 +72,12 @@ api.remove = function(id) {
   return busytd[currentLabel.data('index')] = [];
 };
 
-api.move = function(data) {
-  return console.log('Demo:', data);
+api.move = function() {
+  return api.move(data.id, level_index());
 };
 
-api.call_move = function() {
-  var data;
-  data = {
-    id: currentLabel.data('index'),
-    y: level_index(),
-    x: first_index()
-  };
-  return api.move(data);
+api.call_move = function(id, y) {
+  return console.log('Demo:', id, y);
 };
 
 api.generate = function(start, end, offset) {
@@ -281,7 +275,7 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
       }
       labelDrag = false;
       if (mouseElStart && mouseElStart.closest('tr').index() !== tr_level) {
-        api.call_move();
+        api.move();
       }
     } else if (mouseIsDown) {
       mouseElFinish = $(this);
