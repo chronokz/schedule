@@ -129,7 +129,9 @@ api.generate = function(start, end) {
     start_y++;
   }
   $('#schedule tbody td[data-day="' + currentDate.getDate() + '"][data-month="' + (currentDate.getMonth() + 1) + '"]').addClass('today');
-  $('#schedule').css('left', -($('#schedule tbody td.today').index() - 3) * 60);
+  if ($('#schedule tbody td.today').length) {
+    $('#schedule').css('left', -($('#schedule tbody td.today').index() - 3) * 60);
+  }
   return api.call_generate();
 };
 
