@@ -140,13 +140,16 @@ api.generate = (start, end, offset) ->
 		# Months
 		while start_m <= month_count
 			dayInMonth = new Date(start_y,start_m,0).getDate()
-			td = $('<th colspan="'+dayInMonth+'">'+month[start_m-1]+'</th>')
-			$('#schedule thead tr:first').append(td)
+
 
 			if start_y == end_y && start_m == end_m
 				day_count = end_d
 			else
 				day_count = dayInMonth
+
+			td = $('<th colspan="'+(day_count-start_d+1)+'">'+month[start_m-1]+'</th>')
+			$('#schedule thead tr:first').append(td)
+
 
 			while start_d <= day_count
 				dayOfWeek = new Date(start_y,start_m-1,start_d).getDay()
