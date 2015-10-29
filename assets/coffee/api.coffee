@@ -92,7 +92,7 @@ api.remove = (id) ->
 # data.y (int) - конечная позиция брони в ячейке по y
 # use: api.move = function(data){ console.log(data) }
 api.move = () ->
-	api.call_move(data.id, level_index())
+	api.call_move(currentLabel.data('index'), level_index())
 
 # Вызов callback
 api.call_move = (id, y) ->

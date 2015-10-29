@@ -73,7 +73,7 @@ api.remove = function(id) {
 };
 
 api.move = function() {
-  return api.call_move(data.id, level_index());
+  return api.call_move(currentLabel.data('index'), level_index());
 };
 
 api.call_move = function(id, y) {
@@ -364,6 +364,7 @@ $('#schedule tbody').on('mousedown', '.label-td', function(e) {
     labelDrag = true;
     if (e.which === 1) {
       mouseIsDown = true;
+      mouseElStart = $(this).parent();
       currentLabel = $(this);
       return labelTdLevel = $(this).closest('td').index();
     }

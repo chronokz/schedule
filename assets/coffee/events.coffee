@@ -250,6 +250,7 @@ $('#schedule tbody').on 'mousedown', '.label-td', (e) ->
 		labelDrag = true
 		if e.which == 1
 			mouseIsDown = true
+			mouseElStart = $(this).parent()
 			currentLabel = $(this)
 			labelTdLevel = $(this).closest('td').index()
 
