@@ -159,6 +159,7 @@ api.generate = (start, end) ->
 		start_y++
 
 	$('#schedule tbody td[data-day="'+currentDate.getDate()+'"][data-month="'+(currentDate.getMonth()+1)+'"]').addClass('today')
+	$('#schedule').css 'left', -$('#schedule tbody td.today').index()*60
 
 
 api.call_generate = ->

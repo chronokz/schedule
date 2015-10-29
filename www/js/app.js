@@ -128,7 +128,8 @@ api.generate = function(start, end) {
     }
     start_y++;
   }
-  return $('#schedule tbody td[data-day="' + currentDate.getDate() + '"][data-month="' + (currentDate.getMonth() + 1) + '"]').addClass('today');
+  $('#schedule tbody td[data-day="' + currentDate.getDate() + '"][data-month="' + (currentDate.getMonth() + 1) + '"]').addClass('today');
+  return $('#schedule').css('left', -$('#schedule tbody td.today').index() * 60);
 };
 
 api.call_generate = function() {
