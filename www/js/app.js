@@ -129,7 +129,8 @@ api.generate = function(start, end) {
     start_y++;
   }
   $('#schedule tbody td[data-day="' + currentDate.getDate() + '"][data-month="' + (currentDate.getMonth() + 1) + '"]').addClass('today');
-  return $('#schedule').css('left', -$('#schedule tbody td.today').index() * 60);
+  $('#schedule').css('left', -$('#schedule tbody td.today').index() * 60);
+  return api.call_generate();
 };
 
 api.call_generate = function() {
