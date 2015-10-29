@@ -127,6 +127,8 @@ api.generate = (start, end, offset) ->
 	start_m = parseInt(st[1])
 	end_y = parseInt(en[0])
 	end_m = parseInt(en[1])
+	start_d = parseInt(st[2])
+	end_d = parseInt(en[2])
  
 	while start_y <= end_y
 
@@ -141,18 +143,23 @@ api.generate = (start, end, offset) ->
 			td = $('<th colspan="'+dayInMonth+'">'+month[start_m-1]+'</th>')
 			$('#schedule thead tr:first').append(td)
 
-			d = 0
-			while d < dayInMonth
-				d++
-				dayOfWeek = new Date(start_y,start_m-1,d).getDay()
-				$('#schedule thead tr:last').append('<th>'+'<span class="dayOfWeek">'+weeks[dayOfWeek]+'</span> <span class="dayInMonth">'+d+'</span></th>')
-				$('#schedule tbody tr').append('<td data-day="'+d+'" data-month="'+start_m+'" data-year="'+start_y+'"></td>')
+			if start_y == end_y && start_m == end_m
+				day_count = end_d
+			else
+				day_count = dayInMonth
+
+			while start_d <= day_count
+				dayOfWeek = new Date(start_y,start_m-1,start_d).getDay()
+				$('#schedule thead tr:last').append('<th>'+'<span class="dayOfWeek">'+weeks[dayOfWeek]+'</span> <span class="dayInMonth">'+start_d+'</span></th>')
+				$('#schedule tbody tr').append('<td data-day="'+start_d+'" data-month="'+start_m+'" data-year="'+start_y+'"></td>')
+				start_d++
+
+			start_d = 1
 
 			start_m++
 			
 		
-		if start_m >= 12
-			start_m = 1
+		start_m = 1
 		start_y++
 
 	$('#schedule tbody td[data-day="'+currentDate.getDate()+'"][data-month="'+(currentDate.getMonth()+1)+'"]').addClass('today')
