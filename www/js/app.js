@@ -86,6 +86,55 @@ api.call_move = function() {
   return api.move(data);
 };
 
+api.generate = function(start, end) {
+  var d, dayInMonth, dayOfWeek, en, end_date, end_m, end_y, month_count, st, start_date, start_m, start_y, td, v, variants;
+  $('#schedule').css('left', 0);
+  $('#schedule thead tr, #schedule tbody').html('');
+  st = start.split('-');
+  en = end.split('-');
+  start_date = new Date(st[0], st[1], st[2]);
+  end_date = new Date(en[0], en[1], en[2]);
+  variants = $('#variants tbody tr').length;
+  v = 0;
+  while (v < variants) {
+    $('#schedule tbody').append('<tr></tr>');
+    v++;
+  }
+  start_y = parseInt(st[0]);
+  start_m = parseInt(st[1]);
+  end_y = parseInt(en[0]);
+  end_m = parseInt(en[1]);
+  while (start_y <= end_y) {
+    if (start_y === end_y) {
+      month_count = end_m;
+    } else {
+      month_count = 12;
+    }
+    while (start_m <= month_count) {
+      dayInMonth = new Date(start_y, start_m, 0).getDate();
+      td = $('<th colspan="' + dayInMonth + '">' + month[start_m - 1] + '</th>');
+      $('#schedule thead tr:first').append(td);
+      d = 0;
+      while (d < dayInMonth) {
+        d++;
+        dayOfWeek = new Date(start_y, start_m - 1, d).getDay();
+        $('#schedule thead tr:last').append('<th>' + '<span class="dayOfWeek">' + weeks[dayOfWeek] + '</span> <span class="dayInMonth">' + d + '</span></th>');
+        $('#schedule tbody tr').append('<td data-day="' + d + '" data-month="' + start_m + '" data-year="' + start_y + '"></td>');
+      }
+      start_m++;
+    }
+    if (start_m >= 12) {
+      start_m = 1;
+    }
+    start_y++;
+  }
+  return $('#schedule tbody td[data-day="' + currentDate.getDate() + '"][data-month="' + (currentDate.getMonth() + 1) + '"]').addClass('today');
+};
+
+api.call_generate = function() {
+  return console.log('Calendar was generated');
+};
+
 var busytd, check_collision, create_label, currentDate, currentDay, currentLabel, currentYear, dbl, edit_label, first_index, labelDrag, labelIndex, labelTdLevel, labelTrLevel, label_width, last_index, level_index, monthMouse, monthMouseLeft, mouseElCurrent, mouseElFinish, mouseElStart, mouseIsDown, statuses, zerofill;
 
 mouseIsDown = false;
@@ -449,42 +498,38 @@ $('#schedule_form .modal-dialog').click(function(e) {
   return e.stopPropagation();
 });
 
-var d, date, dayInMonth, dayOfWeek, m, month, td, v, variants, weeks, y, yd;
+var month, weeks;
 
 month = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
 
-weeks = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+weeks = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 
-date = new Date(Date.parse('January 1, 2015'));
 
-y = 2015;
+/*
+date = new Date Date.parse 'January 1, 2015'
+y = 2015
+m = 0
+variants = $('#variants tbody tr').length
 
-m = 0;
+v = 0
+while v < variants
+	$('#schedule tbody').append('<tr></tr>')
+	v++
 
-variants = $('#variants tbody tr').length;
+yd = 0
+while m < 12
+	dayInMonth = new Date(y,m+1,0).getDate()
+	td = $('<th colspan="'+dayInMonth+'">'+month[m]+'</th>')
+	$('#schedule thead tr:first').append(td)
+	d = 0
+	m++
+	while d < dayInMonth
+		d++
+		yd++
+		dayOfWeek = new Date(y,m,d).getDay()
+		$('#schedule thead tr:last').append('<th>'+'<span class="dayOfWeek">'+weeks[dayOfWeek]+'</span> <span class="dayInMonth">'+d+'</span></th>')
+		$('#schedule tbody tr').append('<td data-day="'+d+'" data-month="'+m+'" data-year="'+y+'"></td>')
 
-v = 0;
 
-while (v < variants) {
-  $('#schedule tbody').append('<tr></tr>');
-  v++;
-}
-
-yd = 0;
-
-while (m < 12) {
-  dayInMonth = new Date(y, m + 1, 0).getDate();
-  td = $('<th colspan="' + dayInMonth + '">' + month[m] + '</th>');
-  $('#schedule thead tr:first').append(td);
-  d = 0;
-  m++;
-  while (d < dayInMonth) {
-    d++;
-    yd++;
-    dayOfWeek = new Date(y, m, d).getDay();
-    $('#schedule thead tr:last').append('<th>' + '<span class="dayOfWeek">' + weeks[dayOfWeek] + '</span> <span class="dayInMonth">' + d + '</span></th>');
-    $('#schedule tbody tr').append('<td data-day="' + d + '" data-month="' + m + '" data-year="' + y + '"></td>');
-  }
-}
-
-$('#schedule tbody td[data-day="' + currentDate.getDate() + '"][data-month="' + (currentDate.getMonth() + 1) + '"]').addClass('today');
+$('#schedule tbody td[data-day="'+currentDate.getDate()+'"][data-month="'+(currentDate.getMonth()+1)+'"]').addClass('today')
+ */

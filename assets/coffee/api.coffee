@@ -14,7 +14,7 @@ api = {}
 api.create = (id, y, day, month, w, data) ->
 	if (id)
 		labelIndex = id
-		
+
 	earlyin = ''
 	if (data.earlyin)
 		earlyin = 'earlyin'
@@ -101,3 +101,65 @@ api.call_move = ->
 		y: level_index()
 		x: first_index()
 	api.move(data)
+
+
+# Создать таблицу по запросу
+# start - Генерировать таблицу начиная с даты Y-m-d
+# end - Генерировать таблицу начиная до даты Y-m-d
+api.generate = (start, end) ->
+
+	# reset to default
+	$('#schedule').css 'left', 0
+	$('#schedule thead tr, #schedule tbody').html('')
+
+
+
+	st = start.split '-'
+	en = end.split '-'
+	start_date = new Date(st[0], st[1], st[2])
+	end_date = new Date(en[0], en[1], en[2])
+
+	variants = $('#variants tbody tr').length
+
+	v = 0
+	while v < variants
+		$('#schedule tbody').append('<tr></tr>')
+		v++
+
+	start_y = parseInt(st[0])
+	start_m = parseInt(st[1])
+	end_y = parseInt(en[0])
+	end_m = parseInt(en[1])
+ 
+	while start_y <= end_y
+
+		if start_y == end_y
+			month_count = end_m
+		else
+			month_count = 12
+
+		# Months
+		while start_m <= month_count
+			dayInMonth = new Date(start_y,start_m,0).getDate()
+			td = $('<th colspan="'+dayInMonth+'">'+month[start_m-1]+'</th>')
+			$('#schedule thead tr:first').append(td)
+
+			d = 0
+			while d < dayInMonth
+				d++
+				dayOfWeek = new Date(start_y,start_m-1,d).getDay()
+				$('#schedule thead tr:last').append('<th>'+'<span class="dayOfWeek">'+weeks[dayOfWeek]+'</span> <span class="dayInMonth">'+d+'</span></th>')
+				$('#schedule tbody tr').append('<td data-day="'+d+'" data-month="'+start_m+'" data-year="'+start_y+'"></td>')
+
+			start_m++
+			
+		
+		if start_m >= 12
+			start_m = 1
+		start_y++
+
+	$('#schedule tbody td[data-day="'+currentDate.getDate()+'"][data-month="'+(currentDate.getMonth()+1)+'"]').addClass('today')
+
+
+api.call_generate = ->
+	console.log 'Calendar was generated'

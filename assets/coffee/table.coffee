@@ -14,15 +14,16 @@ month = [
 ]
 
 weeks = [
+	'Вс'
 	'Пн'
 	'Вт'
 	'Ср'
 	'Чт'
 	'Пт'
 	'Сб'
-	'Вс'
 ]
 
+###
 date = new Date Date.parse 'January 1, 2015'
 y = 2015
 m = 0
@@ -49,3 +50,4 @@ while m < 12
 
 
 $('#schedule tbody td[data-day="'+currentDate.getDate()+'"][data-month="'+(currentDate.getMonth()+1)+'"]').addClass('today')
+###
