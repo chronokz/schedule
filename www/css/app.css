@@ -128,6 +128,7 @@ table.variants td {
   width: 15px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+  border-left: 2px solid #f05c1b;
 }
 #schedule .label-td.laterout {
   border-top-right-radius: 0;
@@ -142,6 +143,7 @@ table.variants td {
   width: 15px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+  border-right: 2px solid #f05c1b;
 }
 #schedule .label-td > span {
   overflow: hidden;
