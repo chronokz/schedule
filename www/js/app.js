@@ -86,8 +86,8 @@ api.call_move = function() {
   return api.move(data);
 };
 
-api.generate = function(start, end) {
-  var d, dayInMonth, dayOfWeek, en, end_date, end_m, end_y, month_count, st, start_date, start_m, start_y, td, v, variants;
+api.generate = function(start, end, offset) {
+  var centering, d, dayInMonth, dayOfWeek, en, end_date, end_m, end_y, month_count, st, start_date, start_m, start_y, td, v, variants;
   $('#schedule').css('left', 0);
   $('#schedule thead tr, #schedule tbody').html('');
   st = start.split('-');
@@ -130,7 +130,15 @@ api.generate = function(start, end) {
   }
   $('#schedule tbody td[data-day="' + currentDate.getDate() + '"][data-month="' + (currentDate.getMonth() + 1) + '"]').addClass('today');
   if ($('#schedule tbody td.today').length) {
-    $('#schedule').css('left', -($('#schedule tbody td.today').index() - 3) * 60);
+    if (offset !== 'undefined') {
+      if (offset === 'center') {
+        centering = $('.limiter').width() / 2 - 30;
+        $('#schedule').css('left', -$('#schedule tbody td.today').index() * 60 + centering);
+      }
+      if (parseInt(offset) % 1 === 0) {
+        $('#schedule').css('left', -($('#schedule tbody td.today').index() - offset) * 60);
+      }
+    }
   }
   return api.call_generate();
 };

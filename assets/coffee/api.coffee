@@ -106,7 +106,8 @@ api.call_move = ->
 # Создать таблицу по запросу
 # start - Генерировать таблицу начиная с даты Y-m-d
 # end - Генерировать таблицу начиная до даты Y-m-d
-api.generate = (start, end) ->
+# offset (int)|'center' - Отступ текущей даты от края
+api.generate = (start, end, offset) ->
 
 	# reset to default
 	$('#schedule').css 'left', 0
@@ -159,9 +160,14 @@ api.generate = (start, end) ->
 		start_y++
 
 	$('#schedule tbody td[data-day="'+currentDate.getDate()+'"][data-month="'+(currentDate.getMonth()+1)+'"]').addClass('today')
-	# centering = $('.limiter').width()/2-30
+
 	if $('#schedule tbody td.today').length
-		$('#schedule').css 'left', -($('#schedule tbody td.today').index()-3)*60
+		if offset != 'undefined'
+			if offset == 'center'
+				centering = $('.limiter').width()/2-30
+				$('#schedule').css 'left', -$('#schedule tbody td.today').index()*60+centering
+			if parseInt(offset) % 1 == 0
+				$('#schedule').css 'left', -($('#schedule tbody td.today').index()-offset)*60
 	api.call_generate()
 
 
