@@ -3,16 +3,18 @@ var api;
 api = {};
 
 api.create = function(id, y, day, month, w, data) {
-  var currentLabel, earlyin, i, labelIndex, laterout, parent_td, ref, ref1;
+  var currentLabel, earlyin, i, labelIndex, laterout, parent_td;
   if (id) {
     labelIndex = id;
   }
-  earlyin = (ref = data.earlyin) != null ? ref : {
-    'earlyin': ''
-  };
-  laterout = (ref1 = data.laterout) != null ? ref1 : {
-    'laterout': ''
-  };
+  earlyin = '';
+  if (data.earlyin) {
+    earlyin = 'earlyin';
+  }
+  laterout = '';
+  if (data.laterout) {
+    laterout = 'laterout';
+  }
   currentLabel = $('<div class="label label-primary label-td ' + laterout + ' ' + earlyin + '"><span class="text">' + data.name + '</span></div>');
   currentLabel.addClass('label-td-' + data.status);
   parent_td = $('#schedule tbody tr:eq(' + y + ') td[data-day="' + day + '"][data-month="' + month + '"]');
