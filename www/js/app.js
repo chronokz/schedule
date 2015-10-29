@@ -440,9 +440,19 @@ $('#schedule thead').on('mousedown', 'th', function(e) {
 });
 
 $('#schedule thead').mousemove(function(e) {
+  var left, max_left, min_left;
   if (monthMouse) {
+    left = e.pageX - monthMouse + monthMouseLeft;
+    min_left = 0;
+    if (left > min_left) {
+      left = min_left;
+    }
+    max_left = -$('#schedule').width() + $('.limiter').width();
+    if (left < max_left) {
+      left = max_left;
+    }
     return $('#schedule').css({
-      'left': e.pageX - monthMouse + monthMouseLeft
+      'left': left
     });
   }
 });

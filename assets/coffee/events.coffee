@@ -310,10 +310,19 @@ $('#schedule thead').on 'mousedown', 'th', (e) ->
 	monthMouseLeft = parseInt $('#schedule').css 'left'
 
 $('#schedule thead').mousemove (e) ->
-	# console.info monthMouse
 	if monthMouse
+		left = e.pageX - monthMouse + monthMouseLeft
+
+		min_left = 0
+		if left > min_left
+			left = min_left
+
+		max_left = -$('#schedule').width()+$('.limiter').width()
+		if left < max_left
+			left = max_left
+
 		$('#schedule').css
-			'left': e.pageX - monthMouse + monthMouseLeft
+			'left': left
 
 
 $('#schedule').on 'mouseup', 'thead', ->
