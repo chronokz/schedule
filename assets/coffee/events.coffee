@@ -103,6 +103,12 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 		if labelDrag
 			tr_level = level_index()
 			td_level = first_index()
+
+			if !api.confirm_move()
+				tr_level = currentLabel.data('current-level')
+				currentLabel.removeAttr('data-current-level')
+
+
 			currentLabel.appendTo($('#schedule tbody tr:eq('+tr_level+') td:eq('+td_level+')'))
 			###			len = Math.floor(parseInt(currentLabel[0].style.width)/100)
 			i = 0
@@ -253,6 +259,7 @@ $('#schedule tbody').on 'mousedown', '.label-td', (e) ->
 			mouseElStart = $(this).parent()
 			currentLabel = $(this)
 			labelTdLevel = $(this).closest('td').index()
+			currentLabel.attr('data-current-level', labelTdLevel)
 
 $('#schedule tbody').on 'dblclick', '.label-td', (e) ->
 	if e.which == 1

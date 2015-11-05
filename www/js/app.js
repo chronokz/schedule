@@ -80,6 +80,10 @@ api.call_move = function(id, y) {
   return console.log('Demo: {ID' + id + ', Y:' + y + '}');
 };
 
+api.confirm_move = function() {
+  return confirm('Переместить?');
+};
+
 api.generate = function(start, end, offset) {
   var centering, dayInMonth, dayOfWeek, day_count, en, end_d, end_date, end_m, end_y, month_count, st, start_d, start_date, start_m, start_y, td, v, variants;
   $('#schedule').css('left', 0);
@@ -259,6 +263,10 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
     if (labelDrag) {
       tr_level = level_index();
       td_level = first_index();
+      if (!api.confirm_move()) {
+        tr_level = currentLabel.data('current-level');
+        currentLabel.removeAttr('data-current-level');
+      }
       currentLabel.appendTo($('#schedule tbody tr:eq(' + tr_level + ') td:eq(' + td_level + ')'));
 
       /*			len = Math.floor(parseInt(currentLabel[0].style.width)/100)
@@ -365,7 +373,8 @@ $('#schedule tbody').on('mousedown', '.label-td', function(e) {
       mouseIsDown = true;
       mouseElStart = $(this).parent();
       currentLabel = $(this);
-      return labelTdLevel = $(this).closest('td').index();
+      labelTdLevel = $(this).closest('td').index();
+      return currentLabel.attr('data-current-level', labelTdLevel);
     }
   }
 });

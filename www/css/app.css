@@ -27,7 +27,7 @@ li {
 }
 table.variants {
   border: 0;
-  border-right: 1px solid #fff;
+  border-right: 3px double #ddd;
 }
 table.variants thead th {
   height: 57px;
@@ -232,4 +232,7 @@ table.variants td {
 }
 .today {
   background: #fff7ef;
+}
+.modal-booking .has-error .form-control {
+  border-color: #a94442;
 }
