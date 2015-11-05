@@ -104,8 +104,9 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 			tr_level = level_index()
 			td_level = first_index()
 
-			if !api.confirm_move(currentLabel.data('index'), tr_level)
-				tr_level = currentLabel.data('current-level')
+			if tr_level != currentLabel.data('current-level')
+				if !api.confirm_move(currentLabel.data('index'), tr_level)
+					tr_level = currentLabel.data('current-level')
 			
 			currentLabel.removeAttr('data-current-level')
 
