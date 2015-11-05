@@ -80,8 +80,8 @@ api.call_move = function(id, y) {
   return console.log('Demo: {ID' + id + ', Y:' + y + '}');
 };
 
-api.confirm_move = function() {
-  return confirm('Переместить?');
+api.confirm_move = function(id) {
+  return confirm('Переместить ' + id + '?');
 };
 
 api.generate = function(start, end, offset) {
@@ -263,10 +263,10 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
     if (labelDrag) {
       tr_level = level_index();
       td_level = first_index();
-      if (!api.confirm_move()) {
+      if (!api.confirm_move(currentLabel.data('index'))) {
         tr_level = currentLabel.data('current-level');
-        currentLabel.removeAttr('data-current-level');
       }
+      currentLabel.removeAttr('data-current-level');
       currentLabel.appendTo($('#schedule tbody tr:eq(' + tr_level + ') td:eq(' + td_level + ')'));
 
       /*			len = Math.floor(parseInt(currentLabel[0].style.width)/100)

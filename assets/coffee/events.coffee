@@ -104,9 +104,10 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 			tr_level = level_index()
 			td_level = first_index()
 
-			if !api.confirm_move()
+			if !api.confirm_move(currentLabel.data('index'))
 				tr_level = currentLabel.data('current-level')
-				currentLabel.removeAttr('data-current-level')
+			
+			currentLabel.removeAttr('data-current-level')
 
 
 			currentLabel.appendTo($('#schedule tbody tr:eq('+tr_level+') td:eq('+td_level+')'))
