@@ -287,12 +287,6 @@ $('#schedule tbody').on('mouseup', 'td', function(e) {
       if (mouseElFinish && mouseElStart && currentLabel) {
         tr_level = level_index();
         currentLabel.css('z-index', 100);
-        busytd[labelIndex] = [];
-        i = first_index();
-        while (i < last_index()) {
-          busytd[labelIndex].push([tr_level, i]);
-          i++;
-        }
         currentLabel.attr('data-index', labelIndex);
         labelIndex++;
         checkin = mouseElStart.data('day') + '.' + zerofill(mouseElStart.data('month')) + '.' + mouseElStart.data('year');
@@ -468,6 +462,14 @@ $('#schedule').on('mouseup', 'thead', function() {
 
 $('#schedule').on('mouseleave', 'thead', function() {
   return monthMouse = 0;
+});
+
+$(document).on('mouseup', 'body', function() {
+  if (mouseIsDown) {
+    mouseIsDown = false;
+    busytd[currentLabel.data('index')] = [];
+    return currentLabel.remove();
+  }
 });
 
 

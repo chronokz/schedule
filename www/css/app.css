@@ -27,6 +27,7 @@ li {
 }
 table.variants {
   border: 0;
+  border-right: 1px solid #fff;
 }
 table.variants thead th {
   height: 57px;
@@ -59,6 +60,7 @@ table.variants td {
   -ms-user-select: none;
   user-select: none;
   border-top: 0;
+  border-left: 0;
 }
 #schedule th {
   border: 0;

@@ -151,11 +151,11 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 
 				# create_label()
 
-				busytd[labelIndex] = []
-				i = first_index() # mouseElStart.index()
-				while i < last_index() # mouseElFinish.index()
-					busytd[labelIndex].push([tr_level, i])
-					i++
+				# busytd[labelIndex] = []
+				# i = first_index() # mouseElStart.index()
+				# while i < last_index() # mouseElFinish.index()
+				# 	busytd[labelIndex].push([tr_level, i])
+				# 	i++
 
 				currentLabel.attr('data-index', labelIndex)
 				labelIndex++
@@ -330,6 +330,13 @@ $('#schedule').on 'mouseup', 'thead', ->
 
 $('#schedule').on 'mouseleave', 'thead', ->
 	monthMouse = 0
+
+$(document).on 'mouseup', 'body', ->
+	if mouseIsDown
+		mouseIsDown = false
+		busytd[currentLabel.data('index')] = []
+		currentLabel.remove()
+
 
 
 # Form
