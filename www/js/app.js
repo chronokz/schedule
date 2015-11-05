@@ -374,7 +374,8 @@ $('#schedule tbody').on('mousedown', '.label-td', function(e) {
       mouseElStart = $(this).parent();
       currentLabel = $(this);
       labelTdLevel = $(this).closest('td').index();
-      return currentLabel.attr('data-current-level', labelTdLevel);
+      labelTrLevel = $(this).closest('tr').index();
+      return currentLabel.attr('data-current-level', labelTrLevel);
     }
   }
 });

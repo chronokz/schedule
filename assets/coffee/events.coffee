@@ -260,7 +260,8 @@ $('#schedule tbody').on 'mousedown', '.label-td', (e) ->
 			mouseElStart = $(this).parent()
 			currentLabel = $(this)
 			labelTdLevel = $(this).closest('td').index()
-			currentLabel.attr('data-current-level', labelTdLevel)
+			labelTrLevel = $(this).closest('tr').index()
+			currentLabel.attr('data-current-level', labelTrLevel)
 
 $('#schedule tbody').on 'dblclick', '.label-td', (e) ->
 	if e.which == 1
