@@ -104,7 +104,7 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 			tr_level = level_index()
 			td_level = first_index()
 
-			if !api.confirm_move(currentLabel.data('index'))
+			if !api.confirm_move(currentLabel.data('index'), tr_level)
 				tr_level = currentLabel.data('current-level')
 			
 			currentLabel.removeAttr('data-current-level')
@@ -167,8 +167,8 @@ $('#schedule tbody').on 'mouseup', 'td', (e) ->
 				currentLabel.attr('data-index', labelIndex)
 				labelIndex++
 
-				checkin = mouseElStart.data('day')+'.'+zerofill(mouseElStart.data('month'))+'.'+mouseElStart.data('year')
-				checkout = mouseElFinish.data('day')+'.'+zerofill(mouseElFinish.data('month'))+'.'+mouseElFinish.data('year')
+				checkin = zerofill(mouseElStart.data('day'))+'.'+zerofill(mouseElStart.data('month'))+'.'+mouseElStart.data('year')
+				checkout = zerofill(mouseElFinish.data('day'))+'.'+zerofill(mouseElFinish.data('month'))+'.'+mouseElFinish.data('year')
 
 				api.call_create(tr_level, checkin, checkout)
 				currentLabel.remove()

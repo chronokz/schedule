@@ -98,7 +98,7 @@ api.move = () ->
 api.call_move = (id, y) ->
 	console.log 'Demo: {ID'+id+', Y:'+y+'}'
 
-api.confirm_move = (id) ->
+api.confirm_move = (id, y) ->
 	confirm('Переместить '+id+'?')
 
 # Создать таблицу по запросу
