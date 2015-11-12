@@ -347,6 +347,11 @@ $(document).on 'mouseup', 'body', ->
 		busytd[currentLabel.data('index')] = []
 		currentLabel.remove()
 
+$('html').mouseleave ->
+	mouseIsDown = false
+	busytd[currentLabel.data('index')] = []
+	currentLabel.remove()
+
 
 
 # Form

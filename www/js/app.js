@@ -484,6 +484,12 @@ $(document).on('mouseup', 'body', function() {
   }
 });
 
+$('html').mouseleave(function() {
+  mouseIsDown = false;
+  busytd[currentLabel.data('index')] = [];
+  return currentLabel.remove();
+});
+
 
 /*$('#schedule_form form').submit ->
 
