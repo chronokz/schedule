@@ -486,8 +486,10 @@ $(document).on('mouseup', 'body', function() {
 
 $('html').mouseleave(function() {
   mouseIsDown = false;
-  busytd[currentLabel.data('index')] = [];
-  return currentLabel.remove();
+  if (currentLabel.data('index') === void 0) {
+    busytd[currentLabel.data('index')] = [];
+    return currentLabel.remove();
+  }
 });
 
 

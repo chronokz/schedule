@@ -349,8 +349,9 @@ $(document).on 'mouseup', 'body', ->
 
 $('html').mouseleave ->
 	mouseIsDown = false
-	busytd[currentLabel.data('index')] = []
-	currentLabel.remove()
+	if currentLabel.data('index') == undefined
+		busytd[currentLabel.data('index')] = []
+		currentLabel.remove()
 
 
 
